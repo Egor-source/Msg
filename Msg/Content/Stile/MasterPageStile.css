@@ -1,0 +1,64 @@
+/*Навигационная панель*/
+.nav-bar {
+    width: 100%;
+    height: 60px;
+    background: #a0a0a0;
+    display:flex;
+    
+    align-items:center;
+    padding-left:20%;
+    padding-right:20%;
+}
+/*Логотип*/
+.logo {
+    width:60px;
+    height: 60px;
+}
+/*Кнопка вызова меню*/
+.menuButtonIcon {
+    width: 40px;
+    height: 30px;
+    margin-left: 50%;
+}
+
+.menuButtonIcon:hover{
+    cursor:pointer;
+}
+
+/*Контейнер меню*/
+.mainMenu {
+    list-style: none;
+    position: absolute;
+    margin-top:111px;
+    margin-left:49%;
+    display:none;
+}
+
+/*Элементы меню*/
+.menuMember {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    padding-left: 5px;
+    padding-right:5px;
+    border-bottom: 1px solid #9daccb;
+   
+}
+/*Текст элемента меню*/
+.menuText{
+    margin-left:5px;
+    font-size:17px;
+    color:#9daccb;
+}
+
+/*Иконка элемента меню*/
+.menuIcon{
+    width:20px;
+    height:20px;
+}
+
+.container {
+    background-color: #e9e9e9;
+    
+}
