@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Filters\Authenticated.cs" />
     <Compile Include="Infstruct\DbCleaner.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Infstruct\AppUserManager.cs" />
@@ -166,6 +167,7 @@
     </Compile>
     <Compile Include="Models\AppMsgDbContext.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegistrModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -177,7 +179,7 @@
     <Content Include="Content\Img\SetingsIcon.bmp" />
     <Content Include="Content\Photo\Default.png" />
     <Content Include="Content\Stile\MasterPageStile.css" />
-    <Content Include="Content\Stile\normalize.css" />
+    <Content Include="Content\Stile\normalized.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

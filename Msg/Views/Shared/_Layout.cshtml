@@ -5,29 +5,32 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/Content/Stile/normalize.css" />
-    <link rel="stylesheet" href="~/Content/Stile/MasterPageStile.css" />
+
+    @Styles.Render("~/Content/Stile/MasterPageStile.css")
+    @Styles.Render("~/Content/Stile/normalized.css")
+
 
 </head>
 <body>
 
-
-
+ 
     <nav class="nav-bar">
+
 
         <a href=@Url.Action("Index", "Home")> <img class="logo" src="~/Content/Img/Logo.bmp" /></a>
 
-
+        @if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
             <img class="menuButtonIcon" src="~/Content/Img/MenuButtonIcon.svg" onclick="MenuButtonAction()" />
 
             <ul class="mainMenu">
                 <li class="container"><a href="@Url.Action("Index", "Home")" class="menuMember"><img class="menuIcon" src="~/Content/Img/HomeIcon.svg" /><p class="menuText">На главную</p></a></li>
                 <li class="container"><a href="#" class="menuMember"><img class="menuIcon" src="~/Content/Img/SetingsIcon.bmp" /><p class="menuText">Настройки</p></a></li>
-                <li class="menuMember container"><img class="menuIcon" src="~/Content/Img/ExitIcon.bmp" /><p class="menuText">Выход</p></li>
+                <li class="container"><a href="@Url.Action("Exit", "Home")" class="menuMember"><img class="menuIcon" src="~/Content/Img/ExitIcon.bmp" /><p class="menuText">Выход</p></a></li>
 
             </ul>
+        }
 
-       
     </nav>
 
 

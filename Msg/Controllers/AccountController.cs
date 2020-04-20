@@ -14,6 +14,8 @@ using System.Net.Mail;
 using Msg.App_Start.Identity;
 using System.Threading;
 using Msg.App_Start;
+using Microsoft.Owin.Security;
+using System.Security.Claims;
 
 namespace Msg.Controllers
 {
@@ -26,6 +28,11 @@ namespace Msg.Controllers
         private AppUserManager UserManager
         {
             get { return HttpContext.GetOwinContext().GetUserManager<AppUserManager>(); }
+        }
+
+        private IAuthenticationManager AuthManager
+        {
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         /// <summary>
@@ -161,9 +168,45 @@ namespace Msg.Controllers
             return View("Login");
         }
 
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser user = await UserManager.FindAsync(model.Login, model.Password);
+           
+
+                if (user != null && user.EmailConfirmed)
+                {
+                    ClaimsIdentity claims = await UserManager.CreateIdentityAsync(user,
+                                    DefaultAuthenticationTypes.ApplicationCookie);
+                    AuthManager.SignOut();
+                    AuthManager.SignIn(new AuthenticationProperties
+                    {
+                        IsPersistent = true
+
+                    }, claims); ;
+                    return RedirectToAction("index", "Home");
+                }
+                else if(user==null)
+                {
+                    ModelState.AddModelError("", "Неверно указан логин или пароль");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Пользователь не подтвержден");
+                }
+            }
+
+            return View(model);
         }
     }
 }

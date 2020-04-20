@@ -1,7 +1,37 @@
-﻿
+﻿@model Msg.Models.LoginModel
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Аутентификация";
 }
 
 
+    <section>
+        @using(Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
+            <div class="Errors"> @Html.ValidationSummary(true)</div>
+
+            <div class="FormElement">
+                <span class="formTitle">Логин</span>
+                @Html.TextBoxFor(m => m.Login, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.Login)
+            </div>
+
+            <div class="FormElement">
+                <span class="formTitle">Пароль</span>
+                @Html.PasswordFor(m => m.Password, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+
+            <div class="FormElement">
+                <input type="submit" value="Выполнить вход"  />
+            </div>
+        }
+    </section>
+
+    <section>
+       
+
+        <span><button> @Html.ActionLink("Регистрация", "Register", "Account")</button></span>
+        <span><button>@Html.ActionLink("Забыл пароль", "Register" , "Account" )</button></span>
+    </section>

@@ -1,3 +1,4 @@
+using Microsoft.Owin.Security;
 using Msg.App_Start;
 using Msg.Models;
 using System;
@@ -14,6 +15,7 @@ namespace Msg
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+      
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
