@@ -6,8 +6,13 @@
 
 
     <section class="regForm">
+
+        <h2>Регистрация</h2>
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+
+            @Html.AntiForgeryToken()
+
             <div class="Errors">@Html.ValidationSummary(true)</div>
 
             <div class="FormElement">
@@ -30,7 +35,7 @@
 
             <div class="FormElement">
                 <span class="formTitle">Логин</span>
-                @Html.TextBoxFor(m => m.Login ,new { @class = "formInput" })
+                @Html.TextBoxFor(m => m.Login, new { @class = "formInput" })
                 @Html.ValidationMessageFor(model => model.Login)
             </div>
 

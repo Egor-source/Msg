@@ -24,14 +24,7 @@ namespace Msg
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //”дал€ет всех не подтвержденных пользователей
             DbCleaner.DeleteNoConfirmedUser();
-            //AppMsgDbContext db = new AppMsgDbContext();
-
-            //for (int i = 0; i < 10000; i++)
-            //{
-            //    db.Users.Add(new AppUser { UserName = i.ToString(), Name = "s", Surname = "r", Email = "dwdw", DateOfRegistration = DateTime.Today.Date, Photo = "gee" });
-            //    break;
-            //}
-            //db.SaveChanges();
+        
         }
 
     }

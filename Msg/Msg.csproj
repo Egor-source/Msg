@@ -167,7 +167,9 @@
     </Compile>
     <Compile Include="Models\AppMsgDbContext.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\ChangePasswardModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PasswardResetModel.cs" />
     <Compile Include="Models\RegistrModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -211,8 +213,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\DisplayEmail.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Account\PasswardReset.cshtml" />
+    <Content Include="Views\Account\ChangePassward.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

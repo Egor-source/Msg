@@ -4,8 +4,11 @@
 }
 
 
-    <section>
-        @using(Html.BeginForm())
+    <section class="LoginForm">
+
+        <h2>Вход</h2>
+
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
@@ -24,14 +27,14 @@
             </div>
 
             <div class="FormElement">
-                <input type="submit" value="Выполнить вход"  />
+                <input type="submit" value="Войти" class="formButton" />
             </div>
         }
     </section>
 
-    <section>
+    <section class="LoginLinks">
        
 
         <span><button> @Html.ActionLink("Регистрация", "Register", "Account")</button></span>
-        <span><button>@Html.ActionLink("Забыл пароль", "Register" , "Account" )</button></span>
+        <span><button>@Html.ActionLink("Забыл пароль", "PasswardReset" , "Account" )</button></span>
     </section>
