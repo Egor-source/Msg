@@ -15,6 +15,7 @@ namespace Msg.Models
     {
        //Дириктория фотографий пользователей
         public static string PhotoDir = "~/Content/Photo/";
+        public static string DefaultPhoto = "Default.bmp";
 
         [Required]
         //Имя пользователя

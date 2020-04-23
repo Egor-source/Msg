@@ -22,8 +22,8 @@ namespace Msg.App_Start
         /// <returns></returns>
         public Task SendAsync(IdentityMessage message)
         {
-            var from = "msgmess@mail.ru";
-            var pass = "ARIP7ouctz2-";
+            var from = "msg.sdw.15@mail.ru";
+            var pass = "SoiYPLyft12_";
 
             // адрес и порт smtp-сервера, с которого мы и будем отправлять письмо
             SmtpClient client = new SmtpClient("smtp.mail.ru",587);
@@ -33,7 +33,7 @@ namespace Msg.App_Start
             client.Credentials = new System.Net.NetworkCredential(from, pass);
             client.EnableSsl = true;
 
-            // создаем письмо: message.Destination - адрес получателя
+            // создает письмо: message.Destination - адрес получателя
             var mail = new MailMessage(from, message.Destination);
             mail.Subject = message.Subject;
             mail.Body = message.Body;

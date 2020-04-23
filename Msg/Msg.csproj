@@ -167,9 +167,9 @@
     </Compile>
     <Compile Include="Models\AppMsgDbContext.cs" />
     <Compile Include="Models\AppUser.cs" />
-    <Compile Include="Models\ChangePasswardModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\PasswardResetModel.cs" />
+    <Compile Include="Models\PasswordResetModel.cs" />
     <Compile Include="Models\RegistrModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -179,8 +179,7 @@
     <Content Include="Content\Img\Logo.bmp" />
     <Content Include="Content\Img\MenuButtonIcon.svg" />
     <Content Include="Content\Img\SetingsIcon.bmp" />
-    <Content Include="Content\Photo\Default.png" />
-    <Content Include="Content\Stile\MasterPageStile.css" />
+    <Content Include="Content\Stile\MasterPageStyle.css" />
     <Content Include="Content\Stile\normalized.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -198,6 +197,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MasterPathScripts.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -214,11 +214,12 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Confirm.cshtml" />
-    <Content Include="Views\Account\PasswardReset.cshtml" />
-    <Content Include="Views\Account\ChangePassward.cshtml" />
+    <Content Include="Views\Account\PasswordReset.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Photo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

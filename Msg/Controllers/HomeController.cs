@@ -26,6 +26,11 @@ namespace Msg.Controllers
         
         public ActionResult Exit()
         {
+            var cookie = new HttpCookie("User")
+            {
+                Expires = DateTime.Now.AddDays(-1d)
+            };
+            Response.Cookies.Add(cookie);
             AuthManager.SignOut();
             return RedirectToAction("Login","Account");
         }

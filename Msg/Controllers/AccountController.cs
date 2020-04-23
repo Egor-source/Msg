@@ -16,6 +16,7 @@ using System.Threading;
 using Msg.App_Start;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
+using System.Web.Caching;
 
 namespace Msg.Controllers
 {
@@ -61,7 +62,7 @@ namespace Msg.Controllers
             {
                 //Создает модель пользователя
                 AppUser user = new AppUser { Email=model.Email,UserName=model.Login, Name=model.Name,Surname = model.Surname, DateOfRegistration = DateTime.Today.Date,Gender=model.Gender};
-                user.Photo = model.File == null ? "Default.png" :user.Id;
+                user.Photo = model.File == null ? AppUser.DefaultPhoto :user.Id.GetHashCode()+".jpg";
                 //Добавляет пользователя в бд
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
               
@@ -128,7 +129,7 @@ namespace Msg.Controllers
             upload.SaveAs(Server.MapPath(AppUser.PhotoDir + fileName));
             //Меняет имя файла на id пользователя.Нужно из-за возможности добаления нескольких файлов с одинаковыми именами
             FileInfo dw = new FileInfo(Server.MapPath(AppUser.PhotoDir + fileName));
-            dw.MoveTo(Server.MapPath(AppUser.PhotoDir + id+".png"));
+            dw.MoveTo(Server.MapPath(AppUser.PhotoDir +id.GetHashCode()+".jpg"));
 
         }
 
@@ -170,6 +171,7 @@ namespace Msg.Controllers
 
             return View("Login");
         }
+
         /// <summary>
         /// Get метод для аутентификации
         /// </summary>
@@ -177,6 +179,7 @@ namespace Msg.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+
             return View();
         }
 
@@ -207,7 +210,16 @@ namespace Msg.Controllers
                         //Сохранять ли куки при закрытии сайта
                         IsPersistent = true
 
-                    }, claims); ;
+                    }, claims);
+
+                    HttpCookie cookie = new HttpCookie("User");
+
+                    cookie["id"] = user.Id;
+                    cookie["Name"] = user.Name;
+                    cookie["Surname"] = user.Surname;
+                    cookie["Photo"] = user.Photo;
+                    cookie.Expires = DateTime.Now.AddYears(10);
+                    Response.Cookies.Add(cookie);
                     return RedirectToAction("index", "Home");
                 }
                 else if(user==null)
@@ -227,7 +239,7 @@ namespace Msg.Controllers
         /// </summary>
         /// <returns>Представление сброса пароля</returns>
         [HttpGet]
-        public ActionResult PasswardReset()
+        public ActionResult PasswordReset()
         {
             return View();
         }
@@ -238,7 +250,7 @@ namespace Msg.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PasswardReset(PasswardResetModel model)
+        public async Task<ActionResult> PasswordReset(PasswordResetModel model)
         {
 
             if (ModelState.IsValid)
@@ -249,11 +261,12 @@ namespace Msg.Controllers
                 if(user==null)
                 {
                     ModelState.AddModelError("", $"Пользователь {model.Login} не найден");
+                    return View(model);
                 }
                 //Создает токен смены пароля
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 //Создает ссылку для сброса пароля
-                var callbackUrl = Url.Action("ChangePassward", "Account", new { userId = user.Id, code = code },
+                var callbackUrl = Url.Action("ChangePassword", "Account", new { userId = user.Id, code = code },
                               protocol: Request.Url.Scheme);
                 //Отправляет письмо для сброса пароля
                 await UserManager.SendEmailAsync(user.Id, "Сброс пароля",
@@ -272,13 +285,13 @@ namespace Msg.Controllers
         /// <param name="code">Токен</param>
         /// <returns>Представление смены пароля</returns>
         [HttpGet]
-        public ActionResult ChangePassward(string userId = null, string code = null)
+        public ActionResult ChangePassword(string userId = null, string code = null)
         {
             if (userId == null || code == null)
                 return View("Login");
         
 
-            return View(new ChangePasswardModel { UserId=userId,Code=code});
+            return View(new ChangePasswordModel { UserId=userId,Code=code});
         }
 
         /// <summary>
@@ -288,7 +301,7 @@ namespace Msg.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassward(ChangePasswardModel model)
+        public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid) {
                 //Изменяет валидатор пользователя на стандартный
