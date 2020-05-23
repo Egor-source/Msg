@@ -153,8 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Filters\Authenticated.cs" />
-    <Compile Include="Infstruct\DbCleaner.cs" />
+    <Compile Include="Infstruct\Cleaner.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Infstruct\AppUserManager.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -167,10 +168,12 @@
     </Compile>
     <Compile Include="Models\AppMsgDbContext.cs" />
     <Compile Include="Models\AppUser.cs" />
-    <Compile Include="Models\ChangePasswordModel.cs" />
-    <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\PasswordResetModel.cs" />
-    <Compile Include="Models\RegistrModel.cs" />
+    <Compile Include="Models\Account\ChangePasswordModel.cs" />
+    <Compile Include="Models\Account\LoginModel.cs" />
+    <Compile Include="Models\Account\PasswordResetModel.cs" />
+    <Compile Include="Models\Account\RegistrModel.cs" />
+    <Compile Include="Models\Settings\ChangePhotoModel.cs" />
+    <Compile Include="Models\Settings\ChPasswordModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +184,8 @@
     <Content Include="Content\Img\SetingsIcon.bmp" />
     <Content Include="Content\Stile\MasterPageStyle.css" />
     <Content Include="Content\Stile\normalized.css" />
+    <Content Include="Content\Stile\SettingsStyle.css" />
+    <Content Include="Content\Stile\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -193,12 +198,15 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MasterPathScripts.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\SettingsScripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -216,6 +224,9 @@
     <Content Include="Views\Account\Confirm.cshtml" />
     <Content Include="Views\Account\PasswordReset.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Settings\ChangePhoto.cshtml" />
+    <Content Include="Views\Settings\ChPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

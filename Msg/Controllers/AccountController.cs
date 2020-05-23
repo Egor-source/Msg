@@ -99,7 +99,7 @@ namespace Msg.Controllers
                     //Удаляет пользователя,если он не подтвердил свою учетную записть в течении 10 минут
                     ThreadPool.QueueUserWorkItem(delegate
                     {
-                        DbCleaner.DeleteNoConfirmedUser(user.Id);
+                        Cleaner.DeleteNoConfirmedUser(user.Id);
                     });
 
                     ViewBag.Message ="На указанный электронный адрес отправлены дальнейшие инструкции по завершению регистрации";
@@ -120,7 +120,7 @@ namespace Msg.Controllers
         /// </summary>
         /// <param name="upload">Фото</param>
         /// <param name="id">id пользователя</param>
-        private void LoadPhoto(HttpPostedFileBase upload,string id)
+        public void LoadPhoto(HttpPostedFileBase upload,string id)
         {
 
             // Получаем имя файла
@@ -179,7 +179,6 @@ namespace Msg.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-
             return View();
         }
 

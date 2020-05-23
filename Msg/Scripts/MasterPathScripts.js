@@ -8,7 +8,7 @@
     else {
         elem.classList.add('On');
         elem.style.display = 'block';
-    }
+    } 
 }
 
 function MenuButtonAction2() {

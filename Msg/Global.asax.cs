@@ -23,7 +23,7 @@ namespace Msg
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //”дал€ет всех не подтвержденных пользователей
-            DbCleaner.DeleteNoConfirmedUser();
+            Cleaner.DeleteNoConfirmedUser();
         
         }
 

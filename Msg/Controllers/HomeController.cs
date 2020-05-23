@@ -23,14 +23,19 @@ namespace Msg.Controllers
             return View();
         }
 
-        
+         /// <summary>
+         /// Выход
+         /// </summary>
+         /// <returns></returns>
         public ActionResult Exit()
         {
+            //Сбрасывает куки пользователя
             var cookie = new HttpCookie("User")
             {
                 Expires = DateTime.Now.AddDays(-1d)
             };
             Response.Cookies.Add(cookie);
+            //Сбрасывает куки авторизации
             AuthManager.SignOut();
             return RedirectToAction("Login","Account");
         }

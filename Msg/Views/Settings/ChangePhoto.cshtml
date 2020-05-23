@@ -1,0 +1,15 @@
+﻿
+@model Msg.Models.Settings.ChangePhotoModel
+
+@using (Html.BeginForm("ChangePhoto", "Settings", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    HttpCookie cookies = Request.Cookies["User"];
+
+    <input type="File" name="photo" class="formButton" accept="image/jpeg" />
+                
+
+    <input type="hidden" name="id" value="@cookies["id"]" />
+
+    <input type="submit" class="formButton" value="Изменить фото" />
+}
