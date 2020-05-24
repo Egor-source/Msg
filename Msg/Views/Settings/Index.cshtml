@@ -26,14 +26,19 @@
         </section>
 
         <section class="Сustomization">
-            <h2 >Смена ФИО</h2>
+            <h2>Смена ФИО</h2>
             <p class="Button" onclick="Settings(2)">Изменить</p>
-
+            <div class="Changes">
+                @Html.Partial("ChangeFIO")
+            </div>
         </section>
 
         <section class="Сustomization">
             <h2>Смена Email</h2>
             <p class="Button" onclick="Settings(3)">Изменить</p>
+            <div class="Changes">
+                @Html.Partial("ChangeEmail")
+            </div>
         </section>
 
     </section>

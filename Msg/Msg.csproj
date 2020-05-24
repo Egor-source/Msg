@@ -166,12 +166,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infstruct\SetOldEmail.cs" />
     <Compile Include="Models\AppMsgDbContext.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\PasswordResetModel.cs" />
     <Compile Include="Models\Account\RegistrModel.cs" />
+    <Compile Include="Models\Settings\ChangeEmailModel.cs" />
+    <Compile Include="Models\Settings\ChangeFioModel.cs" />
     <Compile Include="Models\Settings\ChangePhotoModel.cs" />
     <Compile Include="Models\Settings\ChPasswordModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -227,6 +230,9 @@
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\ChangePhoto.cshtml" />
     <Content Include="Views\Settings\ChPassword.cshtml" />
+    <Content Include="Views\Settings\ChangeFIO.cshtml" />
+    <Content Include="Views\Settings\ChangeEmail.cshtml" />
+    <Content Include="Views\Settings\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
