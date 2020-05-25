@@ -42,17 +42,14 @@ namespace Msg.Controllers
             return RedirectToAction("Login","Account");
         }
 
-        public string GetPeople(string man)
+        public string GetPeople(string man,string id)
         {
             string[] requered = man.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            HttpCookie cookies = Request.Cookies["User"];
-            string id = cookies["id"];
             string json=null;
 
             foreach (var i in requered)
             {
-
                 var users = from user in db.Users where user.Id != id&& (user.Name.Contains(i) || user.Surname.Contains(i)) select new {user.Name,user.Surname,user.Photo};
                json+=JsonConvert.SerializeObject(users);
             }

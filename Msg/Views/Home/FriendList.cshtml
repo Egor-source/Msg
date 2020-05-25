@@ -1,5 +1,10 @@
-﻿<script src="~/Scripts/PeopleSearch.js"></script>
-<input type="text" class="search" onkeyup="Search(event.keyCode)" on />
+﻿@{ 
+    HttpCookie cookies = Request.Cookies["User"];
+}
+
+<script src="~/Scripts/PeopleSearch.js"></script>
+
+<input type="text" class="search" onkeyup="Search(event.keyCode,'@cookies["id"]')"  />
 
 <p class="status"></p>
 

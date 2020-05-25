@@ -1,6 +1,6 @@
 ﻿
 
-function Search(key) {
+function Search(key,id) {
 
     if (key >= 48 && key <= 90 || key == 13 || key==8 || key >= 186 && key <= 222) {
         let man = $(".search").val();
@@ -8,7 +8,7 @@ function Search(key) {
         $.ajax({
             url: "Home/GetPeople",
             type: "POST",
-            data: ({ man: man }),
+            data:{ man: man, id: id },
             dataType: "html",
             beforeSend: Before,
             success: Success
