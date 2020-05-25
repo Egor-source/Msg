@@ -7,13 +7,15 @@ using Microsoft.AspNet.Identity.Owin;
 using Msg.Models;
 using Msg.Filters;
 using Microsoft.Owin.Security;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Msg.Controllers
 {
     [Authenticated]
     public class HomeController : Controller
     {
-
+        AppMsgDbContext db = new AppMsgDbContext();
         private IAuthenticationManager AuthManager
         {
             get { return HttpContext.GetOwinContext().Authentication; }
@@ -38,6 +40,24 @@ namespace Msg.Controllers
             //Сбрасывает куки авторизации
             AuthManager.SignOut();
             return RedirectToAction("Login","Account");
+        }
+
+        public string GetPeople(string man)
+        {
+            string[] requered = man.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            HttpCookie cookies = Request.Cookies["User"];
+            string id = cookies["id"];
+            string json=null;
+
+            foreach (var i in requered)
+            {
+
+                var users = from user in db.Users where user.Id != id&& (user.Name.Contains(i) || user.Surname.Contains(i)) select new {user.Name,user.Surname,user.Photo};
+               json+=JsonConvert.SerializeObject(users);
+            }
+
+            return json;
         }
     }
 }

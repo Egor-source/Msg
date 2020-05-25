@@ -141,7 +141,6 @@ namespace Msg.Controllers
         /// <returns>Представление подтверждения аккаунт</returns>
         public async Task<ActionResult> ConfirmEmail(string userId=null,string code=null)
         {
-            
             if (userId == null || code == null)
             {
                 return View("Login");
