@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Msg.Models.Home;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,6 +13,8 @@ namespace Msg.Models
     /// </summary>
     public class AppMsgDbContext: IdentityDbContext<AppUser>
     {
+        public DbSet<Friend> Friends { get; set; }
+
         public AppMsgDbContext() : base("DefaultConnection") { }
 
         static AppMsgDbContext()

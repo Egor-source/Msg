@@ -40,9 +40,13 @@ function Success(users) {
         return;
     }
 
-    //Генерирует представления для найденных пользователей
     for (var i = 0; i < users.length; i++) {
-        $(".users").append($('<div class="user"><img src="/Content/Photo/' + users[i].Photo + '" class="UserPhoto" /> <p class="">' + users[i].Name + '</p> <p class="">' + users[i].Surname + '</p></div > '));   
-                         
+        GenerateUser(users[i]);
     }
+
+
+}
+    //Генерирует представления для найденных пользователей
+function GenerateUser(user) {
+    $(".users").append($('<div class="user"><input type="hidden" value="' + user.Id + '" class="id" /><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <p class="">' + user.Name + '</p> <p class="">' + user.Surname + '</p></div > '));
 }

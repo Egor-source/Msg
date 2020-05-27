@@ -18,7 +18,8 @@ namespace Msg.App_Start
         {
             app.CreatePerOwinContext(AppMsgDbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
-      
+            app.MapSignalR();
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,

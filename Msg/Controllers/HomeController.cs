@@ -60,7 +60,7 @@ namespace Msg.Controllers
             var first = requered[0];
 
             //Ищет совпадения по первому элементу массива requered
-            var users = from user in db.Users where user.Id != id && (user.Name.Contains(first) || user.Surname.Contains(first)) select new { user.Name, user.Surname, user.Photo };
+            var users = from user in db.Users where user.Id != id && (user.Name.Contains(first) || user.Surname.Contains(first)) select new { user.Id,user.Name, user.Surname, user.Photo };
             for(int i=1;i<requered.Length;i++)
             {
                 //Текущая строка поиска
