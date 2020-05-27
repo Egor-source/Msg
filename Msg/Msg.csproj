@@ -285,7 +285,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Filters\Authenticated.cs" />
-    <Compile Include="Hub\FriendHub.cs" />
+    <Compile Include="Hub\MainHub.cs" />
     <Compile Include="Infstruct\Cleaner.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Infstruct\AppUserManager.cs" />
@@ -305,7 +305,7 @@
     <Compile Include="Models\Account\PasswordResetModel.cs" />
     <Compile Include="Models\Account\RegistrModel.cs" />
     <Compile Include="Models\Home\Friend.cs" />
-    <Compile Include="Models\Home\FriendHubModel.cs" />
+    <Compile Include="Models\Home\MainHubModel.cs" />
     <Compile Include="Models\Settings\ChangeEmailModel.cs" />
     <Compile Include="Models\Settings\ChangeFioModel.cs" />
     <Compile Include="Models\Settings\ChangePhotoModel.cs" />
@@ -329,7 +329,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Stile\bootstrap.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\FriendsHub.js" />
+    <Content Include="Scripts\MainHub.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
