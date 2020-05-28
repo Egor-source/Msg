@@ -29,6 +29,9 @@ function Before() {
 }
 
 function Success(users) {
+
+    var user = $.connection.usersHub;
+
     //Очищает элемент .status
     $(".status").empty();
     //Конвертирует JSON строку в js объект
@@ -42,11 +45,56 @@ function Success(users) {
 
     for (var i = 0; i < users.length; i++) {
         GenerateUser(users[i]);
-    }
+        var id ='#' +users[i].Id;
+            //Добавляет обработчик события click для кнопки добавления в друзья
+        $(id).click(function () {
+            //Вызывает метод сервера для обработки запроса добавления в друзья
+            user.server.friendshipRequest($(this).val());
 
+            //Добавляет пользователя в подписки
+            GenerateSubscriptions($(this).parent());
+
+        });
+    }
 
 }
     //Генерирует представления для найденных пользователей
 function GenerateUser(user) {
-    $(".users").append($('<div class="user"><input type="hidden" value="' + user.Id + '" class="id" /><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <p class="">' + user.Name + '</p> <p class="">' + user.Surname + '</p></div > '));
+    $(".users").append($('<div class="user"><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <p class="">' + user.Name + '</p> <p class="">' + user.Surname + '</p><button class="addFriend usersButton" id="' + user.Id + '" value="' + user.Id+'" ">Добавить в друзья</button></div > '));
+   
 }
+
+function GenerateSubscriptions(user) {
+
+    //Удаляет пользователя из поиска
+    $(user).remove();
+
+
+    //Добавляет пользователя на страницу в категорию подписки
+    $(user).children(".addFriend").text("Отписаться");
+    $(user).children(".addFriend").addClass("unsubscribe");
+    $(user).children(".addFriend").removeClass("addFriend");
+
+    $(".subscriptions").append($('<div class="user">' + $(user).html() + '</div>'));
+
+    var id = '#' + $(user).children(".unsubscribe").val();
+
+    //Добавляет обработчик события click
+    $(id).click(function () {
+
+        $.ajax({
+            //Метод обработки
+            url: "Home/Unsubscribe",
+            //Тип запроса
+            type: "GET",
+            //Передаваеймые в метод переменные
+            data: { id: $(this).val() },
+            //Тип передаваемых данных
+            dataType: "html"
+        });
+
+        $(this).parent().remove();
+
+    });
+}
+

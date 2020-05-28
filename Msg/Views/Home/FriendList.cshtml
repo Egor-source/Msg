@@ -1,5 +1,8 @@
-﻿@{ 
+﻿@using Msg.Models;
+
+@{ 
     HttpCookie cookies = Request.Cookies["User"];
+    AppMsgDbContext db = new AppMsgDbContext();
 }
 
 <script src="~/Scripts/PeopleSearch.js"></script>
@@ -8,8 +11,19 @@
 
 <p class="status"></p>
 
-<section class="newFriends"></section>
+<section class="newFriends">
+
+    @*@foreach (var i in db.Friends.Where(f => f.Status == 0 && f.HostRequestId == cookies["id"]).Join(db.Users.ToArray(), e => e.HostRequestId, o => o.Id, (o, e) => new { id = e.Id, Name = e.Name, Surname = e.Surname, Photo = e.Photo })) 
+    {
+        <img src="~/Content/Photo/@i.Photo" />
+        <p>@i.Name</p>
+        <p>@i.Surname</p>
+    }*@
+
+</section>
 
 <section class="friends"></section>
 
 <section class="users"></section>
+
+<section class="subscriptions"></section>

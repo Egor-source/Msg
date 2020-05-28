@@ -7,24 +7,23 @@ using System.Web;
 
 namespace Msg.Models.Home
 {
+    /// <summary>
+    /// Модель друзей
+    /// </summary>
     public class Friend
     {
         [Key,Column(Order =1)]
+        //Id Первого друга
         public string FriendOneId { get; set; }
         [Key, Column(Order = 2)]
+        //Id второго друга
         public string FriendTwoId { get; set; }
 
-        public int Status
-        {
-            get { return Status; }
-            set
-            {
-                if (value >= 0 && value <= 3)
-                    Status = value;
-            }
-        }
+        //Статус запроса на дружбу {0-Отправлен запрос на дружбу,1-Запрос на дружбу принят,2-Запрос на дружбу откланен}
+        public int Status { get; set; }
+       
 
         //Инициатор запроса
-        public string RequestSenderId { get; set; }
+        public string HostRequestId { get; set; }
     }
 }

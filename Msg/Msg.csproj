@@ -285,7 +285,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Filters\Authenticated.cs" />
-    <Compile Include="Hub\MainHub.cs" />
+    <Compile Include="Hub\UsersHub.cs" />
     <Compile Include="Infstruct\Cleaner.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Infstruct\AppUserManager.cs" />
@@ -306,6 +306,7 @@
     <Compile Include="Models\Account\RegistrModel.cs" />
     <Compile Include="Models\Home\Friend.cs" />
     <Compile Include="Models\Home\MainHubModel.cs" />
+    <Compile Include="Models\Home\UserInfo.cs" />
     <Compile Include="Models\Settings\ChangeEmailModel.cs" />
     <Compile Include="Models\Settings\ChangeFioModel.cs" />
     <Compile Include="Models\Settings\ChangePhotoModel.cs" />

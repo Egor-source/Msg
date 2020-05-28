@@ -9,6 +9,7 @@ using Msg.Filters;
 using Microsoft.Owin.Security;
 using System.IO;
 using Newtonsoft.Json;
+using Msg.Models.Home;
 
 namespace Msg.Controllers
 {
@@ -60,18 +61,55 @@ namespace Msg.Controllers
             var first = requered[0];
 
             //Ищет совпадения по первому элементу массива requered
-            var users = from user in db.Users where user.Id != id && (user.Name.Contains(first) || user.Surname.Contains(first)) select new { user.Id,user.Name, user.Surname, user.Photo };
+            var users = from user in db.Users where user.Id != id && (user.Name.Contains(first) || user.Surname.Contains(first)) select new UserInfo {Id= user.Id,Name= user.Name,Surname= user.Surname,Photo= user.Photo,FriendStatus=-1};
             for(int i=1;i<requered.Length;i++)
             {
                 //Текущая строка поиска
                 var current = requered[i];
                 //Ищет совпадения по текущей строке поиска
-                users =from user in users where user.Name.Contains(current) || user.Surname.Contains(current) select user;
+                users = from user in users where user.Name.Contains(current) || user.Surname.Contains(current) select user;
+                       
             }
+
+            //var friends = db.Friends.Where(u => u.FriendOneId == id || u.FriendTwoId == id);
+
+            //foreach(var user in users)
+            //{
+            //    var friend = friends.Where(f => f.FriendOneId == user.Id || f.FriendTwoId == user.Id).FirstOrDefault();
+
+            //    if(friend!=null)
+            //    {
+            //        if(friend.Status==2&&friend.RequestSenderId==id)
+            //        {
+            //            user.FriendStatus = 3;
+            //        }
+            //        else
+            //        {
+            //            user.FriendStatus = friend.Status;
+            //        }
+            //    }
+
+            //}
+
             //Конвертирует пользователей,удовлетворяющих запросу,в JSON строку
             string json = JsonConvert.SerializeObject(users);
 
             return json;
+        }
+
+        public void AddFriend(string id)
+        {
+
+        }
+          
+        public void RemoveFriend(string id)
+        {
+
+        }
+
+        public void Unsubscribe(string id)
+        {
+
         }
     }
 }
