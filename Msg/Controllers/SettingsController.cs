@@ -25,7 +25,7 @@ namespace Msg.Controllers
     [Authenticated]
     public class SettingsController : Controller
     {
-        AppMsgDbContext db = new AppMsgDbContext();
+       readonly AppMsgDbContext db = new AppMsgDbContext();
 
         private AppUserManager UserManager
         {

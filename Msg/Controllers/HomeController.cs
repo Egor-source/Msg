@@ -10,19 +10,24 @@ using Microsoft.Owin.Security;
 using System.IO;
 using Newtonsoft.Json;
 using Msg.Models.Home;
+using System.Threading.Tasks;
 
 namespace Msg.Controllers
 {
     [Authenticated]
     public class HomeController : Controller
     {
-        AppMsgDbContext db = new AppMsgDbContext();
+       readonly AppMsgDbContext db = new AppMsgDbContext();
         private IAuthenticationManager AuthManager
         {
             get { return HttpContext.GetOwinContext().Authentication; }
         }
         public ActionResult Index()
         {
+            HttpCookie cookie = Request.Cookies["User"];
+
+            GetAllFamiliarUsers(cookie["Id"]);
+
             return View();
         }
 
@@ -97,18 +102,57 @@ namespace Msg.Controllers
             return json;
         }
 
-        public void AddFriend(string id)
+       
+        /// <summary>
+        /// Метод для поиска всех друзей текущего пользователя
+        /// </summary>
+        /// <param name="UserId">UserId текущего пользователя</param>
+        private  void GetAllFamiliarUsers(string UserId)
         {
+            List<AppUser> friendsList = new List<AppUser>();
+            List<AppUser> subscribersList = new List<AppUser>();
+            List<AppUser> subscriptionsList = new List<AppUser>();
 
-        }
-          
-        public void RemoveFriend(string id)
-        {
+                //Ищет в бд всех друзей пользователя
+            var users = db.Friends.Where(x => x.FriendOneId == UserId || x.FriendTwoId == UserId).ToList();
 
-        }
+              foreach (var user in users)
+              {
+                    //UserId друга
+                var fId = user.FriendOneId == UserId ? user.FriendTwoId : user.FriendOneId;
+                //Информация о друге
+                var userInfo = db.Users.FirstOrDefault(x => x.Id == fId);
+                    //Проверяет статус дружбы
+                switch (user.Status)
+                {
+                        //Если друзья не подтверждены
+                    case 0:
+                            //Если текущему пользователю отправили заявку в друзя
+                        if (UserId == user.HostRequestId)
+                        {
+                            subscribersList.Add(userInfo);
 
-        public void Unsubscribe(string id)
-        {
+                        }
+                        //Если текущий пользователь отправил заявку в друзья
+                        else
+                        {
+                            subscriptionsList.Add(userInfo);
+                        }
+                        break;
+                            //Если дружба подтверждена
+                    case 1:
+                        friendsList.Add(userInfo);
+                        break;
+
+                }
+             
+              }
+
+            ViewBag.Friends =friendsList.Count==0?null:friendsList.Select(x=>new UserModel{Id= x.Id, Name=x.Name,Surname=x.Surname,Photo=x.Photo}).ToList();
+
+            ViewBag.Subscribers = subscribersList.Count==0?null:subscribersList.Select(x => new UserModel { Id=x.Id,Name=x.Name,Surname=x.Surname, Photo=x.Photo }).ToList();
+
+            ViewBag.Subscriptions = subscriptionsList.Count==0 ?null: subscriptionsList.Select(x => new UserModel{Id=x.Id,Name=x.Name,Surname=x.Surname,Photo=x.Photo }).ToList();
 
         }
     }

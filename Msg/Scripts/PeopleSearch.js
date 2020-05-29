@@ -1,4 +1,6 @@
-﻿
+﻿// Ссылка на автоматически-сгенерированный прокси хаба
+var hub = $.connection.usersHub;
+
 //срабатывает при нажатии на клавишу в input .search
 function Search(key,id) {
     //Проверяет код нажатой клавиши
@@ -24,13 +26,12 @@ function Search(key,id) {
         });
     }
 }
+//Выводит статус поиска пользователей
 function Before() {
     $(".status").text("Поиск...");
 }
 
 function Success(users) {
-
-    var user = $.connection.usersHub;
 
     //Очищает элемент .status
     $(".status").empty();
@@ -49,7 +50,7 @@ function Success(users) {
             //Добавляет обработчик события click для кнопки добавления в друзья
         $(id).click(function () {
             //Вызывает метод сервера для обработки запроса добавления в друзья
-            user.server.friendshipRequest($(this).val());
+            hub.server.friendshipRequest($(this).val());
 
             //Добавляет пользователя в подписки
             GenerateSubscriptions($(this).parent());
@@ -82,19 +83,10 @@ function GenerateSubscriptions(user) {
     //Добавляет обработчик события click
     $(id).click(function () {
 
-        $.ajax({
-            //Метод обработки
-            url: "Home/Unsubscribe",
-            //Тип запроса
-            type: "GET",
-            //Передаваеймые в метод переменные
-            data: { id: $(this).val() },
-            //Тип передаваемых данных
-            dataType: "html"
-        });
-
+        //Вызывает на сервере метод для отписки от пользователя
+       hub.server.unsubscribe($(this).val());
+        //Удаляет представление пользователя из подписок
         $(this).parent().remove();
-
     });
 }
 

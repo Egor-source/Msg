@@ -307,6 +307,7 @@
     <Compile Include="Models\Home\Friend.cs" />
     <Compile Include="Models\Home\MainHubModel.cs" />
     <Compile Include="Models\Home\UserInfo.cs" />
+    <Compile Include="Models\Home\UserModel.cs" />
     <Compile Include="Models\Settings\ChangeEmailModel.cs" />
     <Compile Include="Models\Settings\ChangeFioModel.cs" />
     <Compile Include="Models\Settings\ChangePhotoModel.cs" />
@@ -373,7 +374,7 @@
     <Content Include="Views\Settings\ChangeFIO.cshtml" />
     <Content Include="Views\Settings\ChangeEmail.cshtml" />
     <Content Include="Views\Settings\Message.cshtml" />
-    <Content Include="Views\Home\FriendList.cshtml" />
+    <Content Include="Views\Home\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
