@@ -14,12 +14,15 @@ $(document).ready(function () {
     //Все еще парсит куки
     Id = Id[1].slice(0, Id[1].length - 1);
 
+    //Обработчик события click для подтверждения дружбы
     $(".confirmFriend").click(function () {
 
+        //Вызывает на сервере метод для подтверждения дружбы
         hub.server.confirmFriendship($(this).val());
 
         var photo = $(this).parent().children('.UserPhoto').attr('src').split('/');
 
+        //Информация о пользователи,получаемая из представления,стригеревшего метод
         var obj = {
             Id: $(this).val(),
             Name: $(this).parent().children('.Name').text(),
@@ -32,12 +35,15 @@ $(document).ready(function () {
         GenerateFriendView(obj);
     });
 
+    //Обработчик события click для удаления из друзей
     $('.friend').click(function () {
         //Вызывает на сервере метод удаления друга
         hub.server.removeFriend($(this).val());
 
+        
         var photo = $(this).parent().children('.UserPhoto').attr('src').split('/');
 
+        //Информация о пользователи,получаемая из представления,стригеревшего метод
         var obj = {
             Id: $(this).val(),
             Name: $(this).parent().children('.Name').text(),
@@ -50,6 +56,7 @@ $(document).ready(function () {
         GenerateNewFriendView(obj);
     });
 
+    //Обработчик события click для отписки от пользователя
     $('.unsubscribe').click(function () {
 
         //Вызывает на сервере метод для отписки от пользователя
@@ -92,15 +99,12 @@ $(document).ready(function () {
 
     }
 
+    //Метод,вызываемый сервером при удалении пользователя из друзей
     hub.client.removeFriend = function (jsonUser) {
-
-        console.log(1);
+         //Сереализует JSON строку в массив объектов
         var deletingUser = jQuery.parseJSON(jsonUser);
 
-        console.log(jsonUser);
-
         for (var i = 0; i < deletingUser.length; i++) {
-            console.log(3);
             GenerateDeletingUserView(deletingUser[i]);
         }
 
@@ -150,11 +154,12 @@ function GenerateFriendView(friend) {
     });
 }
 
+//Добавляет представление для удаленного из друзей пользователя
 function GenerateDeletingUserView(user) {
     var id = '#' + user.Id;
-    console.log(321);
 
     $(id).parent().remove();
+
     $(".subscriptions").append($('<div class="user"><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <p class="Name">' + user.Name + '</p> <p class="Surname">' + user.Surname + '</p><button class="unsubscribe usersButton" id="' + user.Id + '" value="' + user.Id + '" >Отписаться</button></div > '));
 
     $(id).click(function () {

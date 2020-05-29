@@ -66,38 +66,54 @@ namespace Msg.Controllers
             var first = requered[0];
 
             //Ищет совпадения по первому элементу массива requered
-            var users = from user in db.Users where user.Id != id && (user.Name.Contains(first) || user.Surname.Contains(first)) select new UserInfo {Id= user.Id,Name= user.Name,Surname= user.Surname,Photo= user.Photo,FriendStatus=-1};
+            var users = (from user in db.Users where user.Id != id && (user.Name.Contains(first) || user.Surname.Contains(first)) select new  { user.Id,user.Name, user.Surname,user.Photo,Status=-1,HostRequestId=""}).ToList();
             for(int i=1;i<requered.Length;i++)
             {
                 //Текущая строка поиска
                 var current = requered[i];
                 //Ищет совпадения по текущей строке поиска
-                users = from user in users where user.Name.Contains(current) || user.Surname.Contains(current) select user;
+                users = (from user in users where user.Name.Contains(current) || user.Surname.Contains(current) select user).ToList();
                        
             }
 
-            //var friends = db.Friends.Where(u => u.FriendOneId == id || u.FriendTwoId == id);
+            var frinds = db.Friends.Where(u => u.FriendOneId == id || u.FriendTwoId == id).Select(u => u.FriendOneId == id ? new { Id = u.FriendTwoId, u.Status, u.HostRequestId } :new { Id = u.FriendOneId, u.Status, u.HostRequestId });
 
-            //foreach(var user in users)
-            //{
-            //    var friend = friends.Where(f => f.FriendOneId == user.Id || f.FriendTwoId == user.Id).FirstOrDefault();
+           var result = users.ToList().Join(frinds,
+                                        u => u.Id,
+                                        f => f.Id,
+                                       (userInfo, friendInfo) => new
+                                       {
+                                           userInfo.Id,
+                                           userInfo.Name,
+                                           userInfo.Surname,
+                                           userInfo.Photo,
+                                           friendInfo.HostRequestId,
+                                           friendInfo.Status
+                
+                                       }).ToList();
+        
 
-            //    if(friend!=null)
-            //    {
-            //        if(friend.Status==2&&friend.RequestSenderId==id)
-            //        {
-            //            user.FriendStatus = 3;
-            //        }
-            //        else
-            //        {
-            //            user.FriendStatus = friend.Status;
-            //        }
-            //    }
+            users.RemoveAll(x=>result.Select(y=>y.Id).Contains(x.Id));
 
-            //}
+            string userJson = JsonConvert.SerializeObject(users);
+            string resultJson = JsonConvert.SerializeObject(result);
 
-            //Конвертирует пользователей,удовлетворяющих запросу,в JSON строку
-            string json = JsonConvert.SerializeObject(users);
+            string json = userJson.Substring(0, userJson.Length - 1) + ',' + resultJson.Substring(1, resultJson.Length - 1);
+
+
+            // Сериализует пользователей, удовлетворяющих запросу,в JSON строку
+            if (result.Count == 0)
+            {
+                json = userJson;
+            }
+            else if (users.Count == 0)
+            {
+                json = resultJson;
+            }
+            else
+            {
+                json = userJson.Substring(0, userJson.Length - 1) + ',' + resultJson.Substring(1, resultJson.Length - 1);
+            }
 
             return json;
         }
@@ -148,11 +164,12 @@ namespace Msg.Controllers
              
               }
 
-            ViewBag.Friends =friendsList.Count==0?null:friendsList.Select(x=>new UserModel{Id= x.Id, Name=x.Name,Surname=x.Surname,Photo=x.Photo}).ToList();
+              //Добавляет списки полученных пользователей в соответствующий ViewBag
+            ViewBag.Friends =friendsList.Count==0?null:friendsList.Select(x=>new UserInfoModel{Id= x.Id, Name=x.Name,Surname=x.Surname,Photo=x.Photo}).ToList();
 
-            ViewBag.Subscribers = subscribersList.Count==0?null:subscribersList.Select(x => new UserModel { Id=x.Id,Name=x.Name,Surname=x.Surname, Photo=x.Photo }).ToList();
+            ViewBag.Subscribers = subscribersList.Count==0?null:subscribersList.Select(x => new UserInfoModel { Id=x.Id,Name=x.Name,Surname=x.Surname, Photo=x.Photo }).ToList();
 
-            ViewBag.Subscriptions = subscriptionsList.Count==0 ?null: subscriptionsList.Select(x => new UserModel{Id=x.Id,Name=x.Name,Surname=x.Surname,Photo=x.Photo }).ToList();
+            ViewBag.Subscriptions = subscriptionsList.Count==0 ?null: subscriptionsList.Select(x => new UserInfoModel{Id=x.Id,Name=x.Name,Surname=x.Surname,Photo=x.Photo }).ToList();
 
         }
     }

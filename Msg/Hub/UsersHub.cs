@@ -110,26 +110,36 @@ namespace Msg.Hubs
         {
             //Подтверждаемый пользователь
             var confirmed = Users.FirstOrDefault(r => r.UserId == Userid);
+
             //Подтверждающий пользователь
             var confirming = Users.FirstOrDefault(d => d.ConnectionId.Contains(Context.ConnectionId));
 
+            //Ищет пару друзей в базе данных
             var friends = db.Friends.FirstOrDefault(r=>((r.FriendOneId==Userid||r.FriendTwoId==Userid)&&(r.FriendOneId==confirming.UserId||r.FriendTwoId==confirming.UserId)));
 
+            //Удаляет информацию об отправители запроса
             friends.HostRequestId = null;
 
+            //Изменяет статус дружбы
             friends.Status = 1;
 
+            //Сохраняет изменения в бд
             db.Entry(friends).State = EntityState.Modified;
             db.SaveChanges();
 
             if(confirmed!=null)
             {
+                //Получает пользовательскую информацию отправителя запроса на подтверждение дружбы сереализует ее в JSON строку
                 var jsonConfirmingUserInfo = JsonConvert.SerializeObject(db.Users.Where(u => u.Id == confirming.UserId).Select(u => new { u.Id, u.Name, u.Surname, u.Photo }));
 
                 Clients.Group(confirmed.UserId).confirmFriendship(jsonConfirmingUserInfo);
             }
         }
 
+        /// <summary>
+        /// Изменяет статус дружбы
+        /// </summary>
+        /// <param name="Userid">UserId удаляемого пользователя</param>
         public void RemoveFriend(string Userid)
         {
             //Удаляемый из списка друзей
@@ -137,15 +147,20 @@ namespace Msg.Hubs
             //Удаляющий пользователь
             var deleting = Users.FirstOrDefault(d => d.ConnectionId.Contains(Context.ConnectionId));
 
+            //Ищет пару друзей в базе данных
             var friends = db.Friends.FirstOrDefault(r => ((r.FriendOneId == Userid || r.FriendTwoId == Userid) && (r.FriendOneId == deleting.UserId || r.FriendTwoId == deleting.UserId)));
 
+            //Изменяет статус дружбы
             friends.Status =0;
 
+            //Делает получателем запроса на дружбу пользователя,который вызвал метод
             friends.HostRequestId = deleting.UserId;
 
+            //Сохраняет изменения в бд
             db.Entry(friends).State = EntityState.Modified;
             db.SaveChanges();
 
+            //Получает пользовательскую информацию отправителя запроса сереализует ее в JSON строку
             var json = JsonConvert.SerializeObject(db.Users.Where(u => u.Id == deleting.UserId).Select(u => new { u.Id, u.Name, u.Surname, u.Photo }));
 
             if(removable!=null)

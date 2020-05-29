@@ -306,8 +306,7 @@
     <Compile Include="Models\Account\RegistrModel.cs" />
     <Compile Include="Models\Home\Friend.cs" />
     <Compile Include="Models\Home\MainHubModel.cs" />
-    <Compile Include="Models\Home\UserInfo.cs" />
-    <Compile Include="Models\Home\UserModel.cs" />
+    <Compile Include="Models\Home\UserInfoModel.cs" />
     <Compile Include="Models\Settings\ChangeEmailModel.cs" />
     <Compile Include="Models\Settings\ChangeFioModel.cs" />
     <Compile Include="Models\Settings\ChangePhotoModel.cs" />

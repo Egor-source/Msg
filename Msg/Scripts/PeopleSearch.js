@@ -35,6 +35,17 @@ function Success(users) {
 
     //Очищает элемент .status
     $(".status").empty();
+
+    if (users == '') {
+        $.ajax({
+            //Метод обработки
+            url: "Home/Index",
+            //Тип запроса
+            type: "Get",
+        });
+        return;
+    }
+
     //Конвертирует JSON строку в js объект
     users = jQuery.parseJSON(users);
 
@@ -45,24 +56,54 @@ function Success(users) {
     }
 
     for (var i = 0; i < users.length; i++) {
-        GenerateUser(users[i]);
-        var id ='#' +users[i].Id;
-            //Добавляет обработчик события click для кнопки добавления в друзья
-        $(id).click(function () {
-            //Вызывает метод сервера для обработки запроса добавления в друзья
-            hub.server.friendshipRequest($(this).val());
 
-            //Добавляет пользователя в подписки
-            GenerateSubscriptions($(this).parent());
+        var fId ='#'+ users[i].Id;
 
-        });
+        switch (users[i].Status) {
+            case -1:
+                $(fId).parent().remove();
+                GenerateUser(users[i]);
+                break;
+            case 0:
+                var cookie = $.cookie("User").split('Name');
+
+                //Парсит куки
+                var Id = cookie[0].split("=");
+
+                //Все еще парсит куки
+                Id = Id[1].slice(0, Id[1].length - 1);
+
+                $(fId).parent().remove();
+
+                if (users[i].HostRequestId == Id) {
+                    GenerateNewFriendView(users[i]);
+                }
+                else {
+                    GenerateDeletingUserView(users[i]);
+                }
+                break;
+            case 1:
+                $(fId).parent().remove();
+                GenerateFriendView(users[i]);
+                break;
+        }
     }
 
 }
     //Генерирует представления для найденных пользователей
 function GenerateUser(user) {
     $(".users").append($('<div class="user"><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <p class="">' + user.Name + '</p> <p class="">' + user.Surname + '</p><button class="addFriend usersButton" id="' + user.Id + '" value="' + user.Id+'" ">Добавить в друзья</button></div > '));
-   
+
+    var id = '#' + user.Id;
+    //Добавляет обработчик события click для кнопки добавления в друзья
+    $(id).click(function () {
+        //Вызывает метод сервера для обработки запроса добавления в друзья
+        hub.server.friendshipRequest(user.Id);
+
+        //Добавляет пользователя в подписки
+        GenerateSubscriptions($(this).parent());
+
+    });
 }
 
 function GenerateSubscriptions(user) {
