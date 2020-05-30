@@ -31,6 +31,19 @@ namespace Msg.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Метод для перезагрузки сайдбара
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SidbarReboot()
+        {
+            HttpCookie cookies = Request.Cookies["User"];
+            GetAllFamiliarUsers(cookies["Id"]);
+
+            return PartialView("Sidebar");
+        }
+
+
          /// <summary>
          /// Выход
          /// </summary>
@@ -76,8 +89,10 @@ namespace Msg.Controllers
                        
             }
 
+            //Получает список всех друзей текущего пользователя
             var frinds = db.Friends.Where(u => u.FriendOneId == id || u.FriendTwoId == id).Select(u => u.FriendOneId == id ? new { Id = u.FriendTwoId, u.Status, u.HostRequestId } :new { Id = u.FriendOneId, u.Status, u.HostRequestId });
 
+            //Отбирает всех друзей пользователя из списка искомых пользователей
            var result = users.ToList().Join(frinds,
                                         u => u.Id,
                                         f => f.Id,
@@ -92,30 +107,32 @@ namespace Msg.Controllers
                 
                                        }).ToList();
         
-
+            //Удаляет всех друзей из искомых пользователей
             users.RemoveAll(x=>result.Select(y=>y.Id).Contains(x.Id));
 
+            //Сереализует искомых пользователей в JSON строку
             string userJson = JsonConvert.SerializeObject(users);
+
+            //Сереализует искомых друзей в JSON строку
             string resultJson = JsonConvert.SerializeObject(result);
 
-            string json = userJson.Substring(0, userJson.Length - 1) + ',' + resultJson.Substring(1, resultJson.Length - 1);
-
-
-            // Сериализует пользователей, удовлетворяющих запросу,в JSON строку
+            //Если среди искомых пользователей не было друзей
             if (result.Count == 0)
             {
-                json = userJson;
+                
+                return  userJson;
             }
+            //Усли среди искомых пользователей были только друзья
             else if (users.Count == 0)
             {
-                json = resultJson;
+                return  resultJson;
             }
             else
             {
-                json = userJson.Substring(0, userJson.Length - 1) + ',' + resultJson.Substring(1, resultJson.Length - 1);
+                //Составляет одну JSON строку из искомых пользователей и друзей
+                return userJson.Substring(0, userJson.Length - 1) + ',' + resultJson.Substring(1, resultJson.Length - 1);
             }
 
-            return json;
         }
 
        
@@ -171,6 +188,12 @@ namespace Msg.Controllers
 
             ViewBag.Subscriptions = subscriptionsList.Count==0 ?null: subscriptionsList.Select(x => new UserInfoModel{Id=x.Id,Name=x.Name,Surname=x.Surname,Photo=x.Photo }).ToList();
 
+        }
+
+
+        public ActionResult ShowDialog(string senderId,string recipientId)
+        {
+            return PartialView("Dialog");
         }
     }
 }

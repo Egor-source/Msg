@@ -83,7 +83,7 @@ namespace Msg.Hubs
             var sendingRequest = Users.FirstOrDefault(f => f.ConnectionId.Contains(Context.ConnectionId));
 
             //Добавление новой пары друзей в бд
-            db.Friends.Add(new Friend { FriendOneId = requestRecipientUserId, FriendTwoId = sendingRequest.UserId, Status = 0, HostRequestId = requestRecipientUserId });
+            db.Friends.Add(new FriendModel { FriendOneId = requestRecipientUserId, FriendTwoId = sendingRequest.UserId, Status = 0, HostRequestId = requestRecipientUserId });
             try
             {
                 db.SaveChanges();

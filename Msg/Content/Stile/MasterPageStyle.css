@@ -12,7 +12,6 @@
 .nav-bar {
     display: flex;
     height: 60px;
-    align-items: center;
     justify-content: space-around;
     background-color: #c1c1c1;
 }

@@ -1,0 +1,69 @@
+﻿@using Msg.Models;
+
+@{
+    HttpCookie cookies = Request.Cookies["User"];
+    AppMsgDbContext db = new AppMsgDbContext();
+
+}
+
+
+<script src="~/Scripts/PeopleSearch.js"></script>
+
+<input type="text" class="search" onkeyup="Search(event.keyCode,'@cookies["id"]')" />
+
+<p class="status"></p>
+
+<p  class="sidebarLable">Подписчики</p>
+<section class="newFriends">
+    @if (ViewBag.Subscribers != null)
+    {
+       foreach (var i in ViewBag.Subscribers)
+      {
+        <div class="newFriend @i.Id user">
+            <img src="/Content/Photo/@i.Photo" class="UserPhoto" />
+            <p class="Name">@i.Name </p>
+            <p class="Surname">@i.Surname</p>
+            <button class="usersButton confirmFriend" id="@i.Id" value="@i.Id">Добавить </button>
+        </div>
+      }
+    }
+</section>
+
+<p class="sidebarLable">Друзья</p>
+<section class="friends">
+    @if (ViewBag.Friends != null)
+    {
+        foreach (var i in ViewBag.Friends)
+         {
+        <div class="user">
+            <img src="/Content/Photo/@i.Photo" class="UserPhoto" />
+            <div class="fio">
+                <p class="Name">@i.Name</p>
+                <p class="Surname">@i.Surname</p>
+            </div>
+            <button class="usersButton friend" id="@i.Id" value="@i.Id" >Удалить </button>
+        </div>
+        }
+    }
+</section>
+
+<p  class="sidebarLable">Пользователи</p>
+<section class="users"></section>
+
+<p  class="sidebarLable">Подписки</p>
+<section class="subscriptions">
+    @if (ViewBag.Subscriptions!=null)
+    {
+        foreach (var i in ViewBag.Subscriptions)
+        {
+        <div class="user">
+            <img src="/Content/Photo/@i.Photo" class="UserPhoto" />
+            <div class="fio">
+                 <p class="Name">@i.Name</p>
+                 <p class="Surname">@i.Surname</p>
+            </div>
+            <button class="unsubscribe usersButton" id="@i.Id" value="@i.Id" >Отписаться</button>
+        </div>
+        }
+    }
+</section>

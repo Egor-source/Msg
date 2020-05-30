@@ -304,8 +304,9 @@
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\PasswordResetModel.cs" />
     <Compile Include="Models\Account\RegistrModel.cs" />
-    <Compile Include="Models\Home\Friend.cs" />
+    <Compile Include="Models\Home\FriendModel.cs" />
     <Compile Include="Models\Home\MainHubModel.cs" />
+    <Compile Include="Models\Home\MessageModel.cs" />
     <Compile Include="Models\Home\UserInfoModel.cs" />
     <Compile Include="Models\Settings\ChangeEmailModel.cs" />
     <Compile Include="Models\Settings\ChangeFioModel.cs" />
@@ -319,9 +320,11 @@
     <Content Include="Content\Img\Logo.bmp" />
     <Content Include="Content\Img\MenuButtonIcon.svg" />
     <Content Include="Content\Img\SetingsIcon.bmp" />
+    <Content Include="Content\Stile\MainPageStyle.css" />
     <Content Include="Content\Stile\MasterPageStyle.css" />
     <Content Include="Content\Stile\normalized.css" />
     <Content Include="Content\Stile\SettingsStyle.css" />
+    <Content Include="Content\Stile\SidebarStyle.css" />
     <Content Include="Content\Stile\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -373,7 +376,8 @@
     <Content Include="Views\Settings\ChangeFIO.cshtml" />
     <Content Include="Views\Settings\ChangeEmail.cshtml" />
     <Content Include="Views\Settings\Message.cshtml" />
-    <Content Include="Views\Home\UsersList.cshtml" />
+    <Content Include="Views\Home\Sidebar.cshtml" />
+    <Content Include="Views\Home\Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

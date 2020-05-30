@@ -35,64 +35,85 @@ function Success(users) {
 
     //Очищает элемент .status
     $(".status").empty();
+  
+
 
     if (users == '') {
         $.ajax({
             //Метод обработки
-            url: "Home/Index",
+            url: "Home/SidbarReboot",
             //Тип запроса
             type: "Get",
+
+            success:Ins
         });
+
         return;
     }
+    else {
 
-    //Конвертирует JSON строку в js объект
-    users = jQuery.parseJSON(users);
+        //Конвертирует JSON строку в js объект
+        users = jQuery.parseJSON(users);
 
-    //Проверяет были ли возвращены значения
-    if (users.length === 0) {
-        $(".status").text("Пользователь не найден");
-        return;
-    }
+        $(".newFriends").empty();
+        $('.subscriptions').empty();
+        $('.friends').empty();
 
-    for (var i = 0; i < users.length; i++) {
 
-        var fId ='#'+ users[i].Id;
+        //Проверяет были ли возвращены значения
+        if (users.length === 0) {
+            $(".status").text("Пользователь не найден");
+            return;
+        }
 
-        switch (users[i].Status) {
-            case -1:
-                $(fId).parent().remove();
-                GenerateUser(users[i]);
-                break;
-            case 0:
-                var cookie = $.cookie("User").split('Name');
 
-                //Парсит куки
-                var Id = cookie[0].split("=");
 
-                //Все еще парсит куки
-                Id = Id[1].slice(0, Id[1].length - 1);
+        for (var i = 0; i < users.length; i++) {
 
-                $(fId).parent().remove();
+            var fId = '#' + users[i].Id;
 
-                if (users[i].HostRequestId == Id) {
-                    GenerateNewFriendView(users[i]);
-                }
-                else {
-                    GenerateDeletingUserView(users[i]);
-                }
-                break;
-            case 1:
-                $(fId).parent().remove();
-                GenerateFriendView(users[i]);
-                break;
+
+            switch (users[i].Status) {
+                case -1:
+                    GenerateUser(users[i]);
+                    break;
+                case 0:
+                    var cookie = $.cookie("User").split('Name');
+
+                    //Парсит куки
+                    var Id = cookie[0].split("=");
+
+                    //Все еще парсит куки
+                    Id = Id[1].slice(0, Id[1].length - 1);
+
+
+                    if (users[i].HostRequestId == Id) {
+                        GenerateNewFriendView(users[i]);
+                    }
+                    else {
+                        GenerateDeletingUserView(users[i]);
+                    }
+                    break;
+                case 1:
+                    GenerateFriendView(users[i]);
+                    break;
+            }
         }
     }
-
 }
+
+function Ins(html) {
+
+    $(".sidebar").empty();
+    $(".sidebar").append(html);
+    confirm();
+    remove();
+    usub();
+}
+
     //Генерирует представления для найденных пользователей
 function GenerateUser(user) {
-    $(".users").append($('<div class="user"><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <p class="">' + user.Name + '</p> <p class="">' + user.Surname + '</p><button class="addFriend usersButton" id="' + user.Id + '" value="' + user.Id+'" ">Добавить в друзья</button></div > '));
+    $(".users").append($('<div class="user"><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /><div class="fio"> <p class="">' + user.Name + '</p> <p class="">' + user.Surname + '</p></div><button class="addFriend usersButton" id="' + user.Id + '" value="' + user.Id+'" ">Добавить</button></div > '));
 
     var id = '#' + user.Id;
     //Добавляет обработчик события click для кнопки добавления в друзья
@@ -103,6 +124,10 @@ function GenerateUser(user) {
         //Добавляет пользователя в подписки
         GenerateSubscriptions($(this).parent());
 
+    });
+
+    $('.user').click(function () {
+        ShowDialog($(this).children('.UserButton').val());
     });
 }
 
@@ -128,6 +153,10 @@ function GenerateSubscriptions(user) {
        hub.server.unsubscribe($(this).val());
         //Удаляет представление пользователя из подписок
         $(this).parent().remove();
+    });
+
+    $('.user').click(function () {
+        ShowDialog($(this).children('.UserButton').val());
     });
 }
 

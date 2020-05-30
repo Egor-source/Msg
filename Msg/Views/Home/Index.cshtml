@@ -1,6 +1,10 @@
 ﻿@{
     ViewBag.Title = "Главная";
+    Styles.Render("~/Content/Stile/MainPageStyle.css");
 }
+
+   <link rel="stylesheet" href="~/Content/Stile/MainPageStyle.css"/>
+   <link rel="stylesheet" href="~/Content/Stile/SidebarStyle.css" />
 
 <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
 
@@ -8,4 +12,10 @@
 
 <script src="~/Scripts/MainHub.js"></script>
 
-<section class="sidebar"> @Html.Partial("UsersList")</section>
+<section class="mainPage">
+    <section class="sidebar"> @Html.Partial("Sidebar")</section>
+   
+
+    <section class="dialogs">  @Html.Partial("Dialog")</section>
+  
+</section>

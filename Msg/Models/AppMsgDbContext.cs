@@ -13,7 +13,9 @@ namespace Msg.Models
     /// </summary>
     public class AppMsgDbContext: IdentityDbContext<AppUser>
     {
-        public DbSet<Friend> Friends { get; set; }
+        public DbSet<FriendModel> Friends { get; set; }
+
+        public DbSet<MessageModel> MessagesP { get; set; }
 
         public AppMsgDbContext() : base("DefaultConnection") { }
 

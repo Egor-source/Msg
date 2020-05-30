@@ -3,7 +3,12 @@ var hub = $.connection.usersHub;
 
 //Выполняется при загрузки страницы
 $(document).ready(function () {
-   
+
+    //ShowDialog($(".UserButton").first().val());
+
+    //$('.user').click(function () {
+    //    ShowDialog($(this).children('.UserButton').val());
+    //});
 
     //Получает куки пользователя
     var cookie = $.cookie("User").split('Name');
@@ -14,56 +19,11 @@ $(document).ready(function () {
     //Все еще парсит куки
     Id = Id[1].slice(0, Id[1].length - 1);
 
-    //Обработчик события click для подтверждения дружбы
-    $(".confirmFriend").click(function () {
+    confirm();
 
-        //Вызывает на сервере метод для подтверждения дружбы
-        hub.server.confirmFriendship($(this).val());
+    remove();
 
-        var photo = $(this).parent().children('.UserPhoto').attr('src').split('/');
-
-        //Информация о пользователи,получаемая из представления,стригеревшего метод
-        var obj = {
-            Id: $(this).val(),
-            Name: $(this).parent().children('.Name').text(),
-            Surname: $(this).parent().children('.Surname').text(),
-            Photo: photo[photo.length-1]
-        };
-
-        $(this).parent().remove();
-
-        GenerateFriendView(obj);
-    });
-
-    //Обработчик события click для удаления из друзей
-    $('.friend').click(function () {
-        //Вызывает на сервере метод удаления друга
-        hub.server.removeFriend($(this).val());
-
-        
-        var photo = $(this).parent().children('.UserPhoto').attr('src').split('/');
-
-        //Информация о пользователи,получаемая из представления,стригеревшего метод
-        var obj = {
-            Id: $(this).val(),
-            Name: $(this).parent().children('.Name').text(),
-            Surname: $(this).parent().children('.Surname').text(),
-            Photo: photo[photo.length - 1]
-        };
-
-        $(this).parent().remove();
-
-        GenerateNewFriendView(obj);
-    });
-
-    //Обработчик события click для отписки от пользователя
-    $('.unsubscribe').click(function () {
-
-        //Вызывает на сервере метод для отписки от пользователя
-        hub.server.unsubscribe($(this).val());
-        //Удаляет представление пользователя из подписок
-        $(this).parent().remove();
-    });
+    usub();
 
     //Метод,вызываемый сервером при отправке запроса на дружбу
     hub.client.friendshepRequest = function (jsonUser) {
@@ -122,7 +82,7 @@ $(document).ready(function () {
 //Добавляет на страницу представление для нового друга 
 function GenerateNewFriendView(newFriend) {
     //Создает представление для нового друга
-    $(".newFriends").append($('<div class="newFriend ' + newFriend.Id + ' user" ><img src="/Content/Photo/' + newFriend.Photo + '" class="UserPhoto"/><p class="Name">' + newFriend.Name + '</p><p class="Surname">' + newFriend.Surname + '</p> <button class="usersButton" id="' + newFriend.Id + '">Добавить друга</button> </div>'));
+    $(".newFriends").append($('<div class="newFriend ' + newFriend.Id + ' user" ><img src="/Content/Photo/' + newFriend.Photo + '" class="UserPhoto"/><div class="fio"><p class="Name">' + newFriend.Name + '</p><p class="Surname">' + newFriend.Surname + '</p></div> <button class="usersButton" id="' + newFriend.Id + '">Добавить</button> </div>'));
     var id = '#' + newFriend.Id;
     //Добавляет обработчик события click для кнопки подтверждения друга
     $(id).click(function () {
@@ -134,12 +94,16 @@ function GenerateNewFriendView(newFriend) {
         GenerateFriendView(newFriend);
 
     });
+
+    $('.user').click(function () {
+        ShowDialog($(this).children('.UserButton').val());
+    });
 }
 
 //Добавляет на страницу представление для друга
 function GenerateFriendView(friend) {
     //Создает представление для друга
-    $(".friends").append($('<div class="user"><img src="/Content/Photo/' + friend.Photo + '" class="UserPhoto"/><p class="Name">' + friend.Name + '</p><p class="Surname">' + friend.Surname + '</p> <button class="usersButton" id="' + friend.Id + '"  value="' + friend.Id + '">Удалить из друзей</button> </div>'));
+    $(".friends").append($('<div class="user"><img src="/Content/Photo/' + friend.Photo + '" class="UserPhoto"/><div class="fio"><p class="Name">' + friend.Name + '</p><p class="Surname">' + friend.Surname + '</p></div> <button class="usersButton" id="' + friend.Id + '"  value="' + friend.Id + '">Удалить</button> </div>'));
     var id = '#' + friend.Id;
 
     //Добавляет обработчик события click для кнопки удаления из друзей
@@ -152,6 +116,10 @@ function GenerateFriendView(friend) {
 
         GenerateNewFriendView(friend);
     });
+
+    $('.user').click(function () {
+        ShowDialog($(this).children('.UserButton').val());
+    });
 }
 
 //Добавляет представление для удаленного из друзей пользователя
@@ -160,7 +128,7 @@ function GenerateDeletingUserView(user) {
 
     $(id).parent().remove();
 
-    $(".subscriptions").append($('<div class="user"><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <p class="Name">' + user.Name + '</p> <p class="Surname">' + user.Surname + '</p><button class="unsubscribe usersButton" id="' + user.Id + '" value="' + user.Id + '" >Отписаться</button></div > '));
+    $(".subscriptions").append($('<div class="user"><img src="/Content/Photo/' + user.Photo + '" class="UserPhoto" /> <div class="fio"><p class="Name">' + user.Name + '</p> <p class="Surname">' + user.Surname + '</p></div><button class="unsubscribe usersButton" id="' + user.Id + '" value="' + user.Id + '" >Отписаться</button></div > '));
 
     $(id).click(function () {
 
@@ -169,7 +137,98 @@ function GenerateDeletingUserView(user) {
         //Удаляет представление пользователя из подписок
         $(this).parent().remove();
     });
+
+    $('.user').click(function () {
+        ShowDialog($(this).children('.UserButton').val());
+    });
 }
+
+function confirm() {
+    //Обработчик события click для подтверждения дружбы
+    $(".confirmFriend").click(function () {
+
+        //Вызывает на сервере метод для подтверждения дружбы
+        hub.server.confirmFriendship($(this).val());
+
+        var photo = $(this).parent().children('.UserPhoto').attr('src').split('/');
+
+        //Информация о пользователи,получаемая из представления,стригеревшего метод
+        var obj = {
+            Id: $(this).val(),
+            Name: $(this).parent().children('.Name').text(),
+            Surname: $(this).parent().children('.Surname').text(),
+            Photo: photo[photo.length - 1]
+        };
+
+        $(this).parent().remove();
+
+        GenerateFriendView(obj);
+    });
+}
+
+
+function remove() {
+    $('.friend').click(function () {
+        //Вызывает на сервере метод удаления друга
+        hub.server.removeFriend($(this).val());
+
+
+        var photo = $(this).parent().children('.UserPhoto').attr('src').split('/');
+
+        //Информация о пользователи,получаемая из представления,стригеревшего метод
+        var obj = {
+            Id: $(this).val(),
+            Name: $(this).parent().children('.Name').text(),
+            Surname: $(this).parent().children('.Surname').text(),
+            Photo: photo[photo.length - 1]
+        };
+
+        $(this).parent().remove();
+
+        GenerateNewFriendView(obj);
+    });
+}
+
+function usub() {
+    //Обработчик события click для отписки от пользователя
+    $('.unsubscribe').click(function () {
+
+        //Вызывает на сервере метод для отписки от пользователя
+        hub.server.unsubscribe($(this).val());
+        //Удаляет представление пользователя из подписок
+        $(this).parent().remove();
+    });
+}
+
+
+function ShowDialog(recipientId){
+
+    var cookie = $.cookie("User").split('Name');
+
+    //Парсит куки
+    var Id = cookie[0].split("=");
+
+    //Все еще парсит куки
+    Id = Id[1].slice(0, Id[1].length - 1);
+
+   
+        $.ajax({
+            //Метод обработки
+            url: "Home/ShowDialog",
+            //Тип запроса
+            type: "POST",
+            //Передаваеймые в метод переменные
+            data: { senderId: Id, recipientId: recipientId },
+            //Тип передаваемых данных
+            dataType: "html",
+          
+        });
+
+   
+
+}
+
+
 
 
 
