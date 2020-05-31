@@ -9,9 +9,12 @@ namespace Msg.Models.Home
 {
     public class MessageModel
     {
-        [Key, Column(Order = 1)]
+        [Key]
+        public string Id { get; set; }
+
+        [Required]
         public string senderId { get; set; }
-        [Key, Column(Order = 2)]
+        [Required]
         public string recipientId { get; set; }
 
         [Required]

@@ -1,4 +1,7 @@
-﻿.mainPage {
+﻿
+.mainPage {
     display: flex;
     margin-top: 15px;
+    justify-content:center;
+    height:85vh;
 }

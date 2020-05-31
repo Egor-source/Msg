@@ -5,17 +5,17 @@
 
    <link rel="stylesheet" href="~/Content/Stile/MainPageStyle.css"/>
    <link rel="stylesheet" href="~/Content/Stile/SidebarStyle.css" />
+    <link  rel="stylesheet" href="~/Content/Stile/DialogsStyle.css" />
 
 <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
-
 <script src="signalr/hubs"></script>
-
 <script src="~/Scripts/MainHub.js"></script>
+<script src="~/Scripts/DialogScripts.js"></script>
 
 <section class="mainPage">
     <section class="sidebar"> @Html.Partial("Sidebar")</section>
-   
 
-    <section class="dialogs">  @Html.Partial("Dialog")</section>
-  
+
+    <section class="dialog">  @Html.Partial("Dialog")</section>
+
 </section>

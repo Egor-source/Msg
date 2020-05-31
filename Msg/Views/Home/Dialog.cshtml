@@ -1,1 +1,20 @@
 ﻿
+
+    @if (ViewBag.Messages != null)
+    {
+        <div class="messages">
+          @foreach (var message in ViewBag.Messages)
+           {
+
+           }
+       </div>
+    }
+    else
+    {
+        <p class="noMessages">
+            Нет сообщений
+        </p>
+    }
+
+
+    <textarea type="text" class="messageInput"></textarea>

@@ -1,0 +1,26 @@
+﻿.dialog{
+    width:62%;
+    margin-left:15px;
+    display:grid;
+    grid-template-rows:30fr 1fr;
+    border:1px solid black;
+    padding:15px;
+}
+
+
+.noMessages {
+    align-self: center;
+    justify-self:center;
+    opacity:0.5;
+    font-family:sans-serif;
+}
+
+.messageInput {
+    width: 99.5%;
+    font-size:20px;
+    resize:none;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}

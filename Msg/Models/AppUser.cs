@@ -42,7 +42,7 @@ namespace Msg.Models
         //[DataType(DataType.DateTime)]
         ////public DateTime DateOfBirthday { get; set; }
 
-
+        public bool Online { get; set; }
 
     }
 }

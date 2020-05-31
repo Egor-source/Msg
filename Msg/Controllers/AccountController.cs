@@ -61,7 +61,7 @@ namespace Msg.Controllers
             if (ModelState.IsValid)
             {
                 //Создает модель пользователя
-                AppUser user = new AppUser { Email=model.Email,UserName=model.Login, Name=model.Name,Surname = model.Surname, DateOfRegistration = DateTime.Today.Date,Gender=model.Gender};
+                AppUser user = new AppUser { Email=model.Email,UserName=model.Login, Name=model.Name,Surname = model.Surname, DateOfRegistration = DateTime.Today.Date,Gender=model.Gender,Online=false};
                 user.Photo = model.File == null ? AppUser.DefaultPhoto :user.Id.GetHashCode()+".jpg";
                 //Добавляет пользователя в бд
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);

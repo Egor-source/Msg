@@ -320,6 +320,7 @@
     <Content Include="Content\Img\Logo.bmp" />
     <Content Include="Content\Img\MenuButtonIcon.svg" />
     <Content Include="Content\Img\SetingsIcon.bmp" />
+    <Content Include="Content\Stile\DialogsStyle.css" />
     <Content Include="Content\Stile\MainPageStyle.css" />
     <Content Include="Content\Stile\MasterPageStyle.css" />
     <Content Include="Content\Stile\normalized.css" />
@@ -333,6 +334,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Stile\bootstrap.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\DialogScripts.js" />
     <Content Include="Scripts\MainHub.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
