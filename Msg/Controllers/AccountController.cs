@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security.DataProtection;
 using Msg.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -16,7 +12,7 @@ using System.Threading;
 using Msg.App_Start;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
-using System.Web.Caching;
+using System.Text;
 
 namespace Msg.Controllers
 {
@@ -27,7 +23,6 @@ namespace Msg.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-
         private AppUserManager UserManager
         {
             get { return HttpContext.GetOwinContext().GetUserManager<AppUserManager>(); }
@@ -213,8 +208,8 @@ namespace Msg.Controllers
                     HttpCookie cookie = new HttpCookie("User");
 
                     cookie["id"] = user.Id;
-                    cookie["Name"] = user.Name;
-                    cookie["Surname"] = user.Surname;
+                    cookie["Name"] = Server.UrlEncode(user.Name);
+                    cookie["Surname"] = Server.UrlEncode( user.Surname);
                     cookie["Photo"] = user.Photo;
                     cookie.Expires = DateTime.Now.AddYears(10);
                     Response.Cookies.Add(cookie);

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Настройки";
+}
+
+@Styles.Render("~/Content/Stile/SettingsStyle.css")
+@Scripts.Render("~/Scripts/SettingsScripts.js")
+
+    <section class="Settings">
+        <h1>Настройки</h1>
+
+        <section class="Сustomization">
+            <h2>Сменить фото</h2>
+            <p class="Button" onclick="Settings(0)">Изменить</p>
+            <div class="Changes">
+                @Html.Partial("ChangePhoto")
+            </div>
+        </section>
+
+        <section class="Сustomization">
+            <h2>Сменить пароль</h2>
+            <p class="Button" onclick="Settings(1)">Изменить</p>
+            <div class="Changes">
+                @Html.Partial("ChPassword")
+            </div>
+        </section>
+
+        <section class="Сustomization">
+            <h2>Смена ФИО</h2>
+            <p class="Button" onclick="Settings(2)">Изменить</p>
+            <div class="Changes">
+                @Html.Partial("ChangeFIO")
+            </div>
+        </section>
+
+        <section class="Сustomization">
+            <h2>Смена Email</h2>
+            <p class="Button" onclick="Settings(3)">Изменить</p>
+            <div class="Changes">
+                @Html.Partial("ChangeEmail")
+            </div>
+        </section>
+
+    </section>

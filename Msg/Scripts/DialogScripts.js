@@ -49,7 +49,7 @@
     $(".messageInput").keyup(function () {
 
         //Проверяет был ли нажат Enter
-        if (event.keyCode == 13) {
+        if (event.keyCode == 13 && $(this).val().length!=0) {
             //Вызывает метод для отправки сообщения на сервере
             hub.server.sendMessage(obj.id, $('.interlocutorId').val(), $(this).val());
 

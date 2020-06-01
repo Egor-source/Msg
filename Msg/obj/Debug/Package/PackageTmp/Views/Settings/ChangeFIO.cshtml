@@ -1,0 +1,22 @@
+﻿
+@model Msg.Models.Settings.ChangeFioModel
+
+@using (Html.BeginForm("ChangeFIO","Settings", FormMethod.Post))
+{
+    HttpCookie cookies = Request.Cookies["User"];
+
+    <input type="hidden" name="id" value="@cookies["id"]" />
+    <div class="FormElement">
+        <span class="formTitle">Имя</span>
+        @Html.TextBoxFor(m => m.Name, new { @class = "formInput" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="FormElement">
+        <span class="formTitle">Фамилия</span>
+        @Html.TextBoxFor(m => m.Surname, new { @class = "formInput" })
+        @Html.ValidationMessageFor(m => m.Surname)
+    </div>
+
+    <input type="submit" class="formButton" value="Изменить ФИО" />
+}

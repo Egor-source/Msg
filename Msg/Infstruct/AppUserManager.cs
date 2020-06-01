@@ -4,10 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using Msg.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Security.Cryptography;
 
 namespace Msg.App_Start.Identity
 {
@@ -15,10 +12,13 @@ namespace Msg.App_Start.Identity
     {
         public AppUserManager(IUserStore<AppUser> store) : base(store) { }
 
+
         public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
         {
             AppMsgDbContext db = context.Get<AppMsgDbContext>();
             AppUserManager manager = new AppUserManager(new UserStore<AppUser>(db));
+
+            manager.UserTokenProvider = new TotpSecurityStampBasedTokenProvider<AppUser, string>();
 
             manager.PasswordValidator = new CustomPasswardValidator
             {
@@ -31,8 +31,9 @@ namespace Msg.App_Start.Identity
 
             var provider = new DpapiDataProtectionProvider("Msg");
 
-            manager.UserTokenProvider = new DataProtectorTokenProvider<AppUser>(
-                provider.Create("EmailConfirmation"));
+            //manager.UserTokenProvider = new DataProtectorTokenProvider<AppUser>(
+            //    provider.Create("EmailConfirmation"));
+          
 
             return manager;
         }

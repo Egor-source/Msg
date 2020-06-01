@@ -1,0 +1,73 @@
+﻿@model Msg.Models.RegistrModel
+
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+
+    <section class="regForm">
+
+        <h2>Регистрация</h2>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="Errors">@Html.ValidationSummary(true)</div>
+
+            <div class="FormElement">
+                <span class="formTitle">Имя</span>
+                @Html.TextBoxFor(m => m.Name, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+
+            <div class="FormElement">
+                <span class="formTitle">Фамилия</span>
+                @Html.TextBoxFor(m => m.Surname, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.Surname)
+            </div>
+
+            <div class="FormElement">
+                <span class="formTitle">Email</span>
+                @Html.TextBoxFor(m => m.Email, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+
+            <div class="FormElement">
+                <span class="formTitle">Логин</span>
+                @Html.TextBoxFor(m => m.Login, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.Login)
+            </div>
+
+            <div class="FormElement">
+                <span class="formTitle">Пароль</span>
+                @Html.PasswordFor(m => m.Password, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+
+            <div class="FormElement">
+                <span class="formTitle">Повторите пароль</span>
+                @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "formInput" })
+                @Html.ValidationMessageFor(model => model.PasswordConfirm)
+            </div>
+
+            <div class="FormElement">
+                <p>Пол</p>
+                @Html.RadioButtonFor(m => m.Gender, "м")
+                <span>М</span>
+
+                @Html.RadioButtonFor(m => m.Gender, "ж")
+                <span>Ж</span>
+
+            </div>
+            @Html.ValidationMessageFor(model => model.Gender)
+
+            <div class="FormElement">
+                <p class="formTitle">Фото</p>
+                <input type="file" name="File" class="formButton formInput" accept="image/jpeg" />
+            </div>
+
+            <div class="FormElement">
+                <input type="submit" class="formButton" value="Зарегестрироваться" />
+            </div>
+        }
+    </section>

@@ -1,0 +1,40 @@
+﻿
+<script src="~/Scripts/DialogScripts.js"></script>
+<div class="dialogHedder">
+    <img src="~/Content/Photo/@ViewBag.Photo"  class="UserPhoto"/>
+    <p class="Name">@ViewBag.Name</p>
+    <p class="Surname">@ViewBag.Surname</p>
+  </div>
+<div class="messages">
+    @if (ViewBag.Dialog != null)
+    {
+        HttpCookie cookie = Request.Cookies["User"];
+        foreach (var message in ViewBag.Dialog)
+        {
+            string messageClass = @message.SenderId == @cookie["id"] ? "sender" : "recipient";
+
+            <div class="message @messageClass ">
+                <img src="~/Content/Photo/@message.Photo" class="UserPhoto" />
+
+                <div class="info">
+                    <div class="messagefio">
+                        <p class="Name">@message.Name</p>
+                        <p class="Surname">@message.Surname</p>
+                        <div class="date">@message.SendingTime</div>
+                    </div>
+                    <p class="text">@message.Text</p>
+                </div>
+
+            </div>
+        }
+    }
+    else
+    {
+        <p class="noMessages">
+            Нет сообщений
+        </p>
+    }
+</div>
+<input type="hidden" class="interlocutorId" value="@ViewBag.InterlocutorId" />
+
+   <textarea type="text" class="messageInput"></textarea>

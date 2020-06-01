@@ -1,0 +1,88 @@
+﻿@using Msg.Models
+@using Msg.Controllers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/Stile/MasterPageStyle.css")
+    @Styles.Render("~/Content/Stile/normalized.css")
+    @Styles.Render("~/Content/Stile/Site.css")
+
+    @Scripts.Render("~/Scripts/MasterPathScripts.js")
+    @Scripts.Render("~/scripts/jquery-3.4.1.min.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/Scripts/jquery.cookie-1.4.1.min.js")
+</head>
+<body>
+
+
+    <section class="nav-bar-container">
+        <nav class="nav-bar">
+
+
+            <a href=@Url.Action("Index", "Home")> <img class="logo" src="~/Content/Img/Log.bmp" /></a>
+
+            <div class="crutch"></div>
+
+
+            @if (HttpContext.Current.User.Identity.IsAuthenticated && Request.Cookies["User"] != null)
+            {
+
+
+                HttpCookie cookies = Request.Cookies["User"];
+
+
+                <section class="menuContainer" onclick="MenuButtonAction()">
+                    <section class="User">
+                        <img src="~/Content/Photo/@cookies["Photo"]" class="UserPhoto" />
+                        <p class="UserFio">@cookies["Name"] @cookies["Surname"]</p>
+                        <p class="UserFio">&#709</p>
+                    </section>
+
+
+
+                    <ul class="mainMenu">
+                        <li class="container"><a href="@Url.Action("Index", "Home")" class="menuMember"><img class="menuIcon Home" src="~/Content/Img/HomeIco.bmp" /><p class="menuText">На главную</p></a></li>
+                        <li class="container"><a href="@Url.Action("Index","Settings")" class="menuMember"><img class="menuIcon" src="~/Content/Img/SetingsIco.bmp" /><p class="menuText">Настройки</p></a></li>
+                        <li class="container"><a href="@Url.Action("Exit", "Home")" class="menuMember"><img class="menuIcon  Exit" src="~/Content/Img/ExitIco.bmp" padding-rigth="40px" /><p class="menuText   ExitText">Выход</p></a></li>
+
+                    </ul>
+                </section>
+            }
+            else
+            {
+                var cookie = new HttpCookie(".AspNet.ApplicationCookie")
+                {
+                    Expires = DateTime.Now.AddDays(-1d)
+                };
+
+                Response.Cookies.Add(cookie);
+
+                <section class="NoAuthUser">
+                    <a href="@Url.Action("Login","Account")" class="NoAuthUserMember">Вход</a>
+                    <a href="@Url.Action("Register","Account")" class="NoAuthUserMember">Регистрация</a>
+                </section>
+            }
+
+
+
+
+            <div class="blackSquare"></div>
+
+
+        </nav>
+    </section>
+
+    <section class="Content" onclick="MenuButtonAction2()">
+        @RenderBody()
+
+    </section>
+
+
+  
+</body>
+</html>

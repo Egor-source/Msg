@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Msg.Models.Settings
 {
     public class ChangeEmailModel
     {
         //id пользователя
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage ="Введите пароль")]
         //Пароль пользователя

@@ -8,6 +8,7 @@ using System.Web;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using Msg.App_Start.Identity;
+using System.Security.Cryptography;
 
 [assembly: OwinStartup(typeof(Msg.App_Start.Startup))]
 namespace Msg.App_Start
@@ -19,6 +20,7 @@ namespace Msg.App_Start
             app.CreatePerOwinContext(AppMsgDbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
             app.MapSignalR();
+
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

@@ -3,20 +3,16 @@ using Msg.App_Start.Identity;
 using Msg.Filters;
 using Msg.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Data.Entity;
 using System.Web.Mvc;
 
 using Microsoft.AspNet.Identity;
-using System.Web.ModelBinding;
 using Msg.Models.Settings;
 using Msg.App_Start;
 using System.Net.Mail;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Msg.Infstruct;
 using System.Threading;
 
@@ -49,7 +45,7 @@ namespace Msg.Controllers
         {
 
             //Проверяет выбрал ли пользователь фото
-            if (model.photo == null)
+            if (model.Photo == null)
             {
                 return RedirectToAction("Index");
             }
@@ -59,7 +55,7 @@ namespace Msg.Controllers
                 //Ищет пользователя в базе данных
                 await Task.Run(() =>
                 {
-                    user = db.Users.Find(model.id);
+                    user = db.Users.Find(model.Id);
                 });
 
                 FileInfo dw = new FileInfo(Server.MapPath(AppUser.PhotoDir + user.Photo));
@@ -74,7 +70,7 @@ namespace Msg.Controllers
                 {
                   
                     //Изменяет название фото на новое
-                    user.Photo = model.id.GetHashCode() + ".jpg";
+                    user.Photo = model.Id.GetHashCode() + ".jpg";
 
                     //Изменяет название фото в базе данных
                     db.Entry(user).State = EntityState.Modified;
@@ -85,22 +81,22 @@ namespace Msg.Controllers
                     HttpCookie cookie = new HttpCookie("User");
 
                     cookie["id"] = user.Id;
-                    cookie["Name"] = user.Name;
-                    cookie["Surname"] = user.Surname;
+                    cookie["Name"] = Server.UrlEncode (user.Name);
+                    cookie["Surname"] = Server.UrlEncode( user.Surname);
                     cookie["Photo"] = user.Photo;
                     cookie.Expires = DateTime.Now.AddYears(10);
                     Response.Cookies.Add(cookie);
                 }
 
                 //Получает название фото
-                string photoName = model.photo.FileName;
+                string photoName = model.Photo.FileName;
 
                 //Сохраняет фото на сервере
-                model.photo.SaveAs(Server.MapPath(AppUser.PhotoDir + photoName));
+                model.Photo.SaveAs(Server.MapPath(AppUser.PhotoDir + photoName));
 
                 //Переименовывает фото
                 dw = new FileInfo(Server.MapPath(AppUser.PhotoDir + photoName));
-                dw.MoveTo(Server.MapPath(AppUser.PhotoDir + model.id.GetHashCode() + ".jpg"));
+                dw.MoveTo(Server.MapPath(AppUser.PhotoDir + model.Id.GetHashCode() + ".jpg"));
 
 
                 return RedirectToAction("Index");
@@ -119,7 +115,7 @@ namespace Msg.Controllers
             {
                 UserManager.UserValidator = new UserValidator<AppUser>(UserManager);
                 //Меняет пароль пользователя в базе данных
-                IdentityResult result = await UserManager.ChangePasswordAsync(model.id, model.OldPassword, model.NewPassword);
+                IdentityResult result = await UserManager.ChangePasswordAsync(model.Id, model.OldPassword, model.NewPassword);
                 UserManager.UserValidator = new CustomUserValidator(UserManager);
 
                 //Проверяет был ли пароль изменен
@@ -154,7 +150,7 @@ namespace Msg.Controllers
             //Ищет пользователя в базе данных
             await Task.Run(() =>
             {
-                user = db.Users.Find(model.id);
+                user = db.Users.Find(model.Id);
             });
 
             //Если пользователь не указывал новое имя и фамилию
@@ -186,8 +182,8 @@ namespace Msg.Controllers
             HttpCookie cookie = new HttpCookie("User");
 
             cookie["id"] = user.Id;
-            cookie["Name"] = user.Name;
-            cookie["Surname"] = user.Surname;
+            cookie["Name"] = Server.UrlEncode( user.Name);
+            cookie["Surname"] =Server.UrlEncode( user.Surname);
             cookie["Photo"] = user.Photo;
             cookie.Expires = DateTime.Now.AddYears(10);
             Response.Cookies.Add(cookie);
@@ -214,7 +210,7 @@ namespace Msg.Controllers
                     return PartialView(model);
                 }
 
-                 user = await UserManager.FindByIdAsync(model.id);
+                 user = await UserManager.FindByIdAsync(model.Id);
 
                 bool result = await UserManager.CheckPasswordAsync(user, model.Password);
 

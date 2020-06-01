@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace Msg.Models.Settings
 {
     public class ChPasswordModel
     {
         //Id пользователя
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Введите старый пароль")]
         //Старый пароль

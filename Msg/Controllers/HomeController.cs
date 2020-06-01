@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity.Owin;
 using Msg.Models;
 using Msg.Filters;
 using Microsoft.Owin.Security;
-using System.IO;
 using Newtonsoft.Json;
 using Msg.Models.Home;
-using System.Threading.Tasks;
 
 namespace Msg.Controllers
 {

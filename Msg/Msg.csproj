@@ -316,11 +316,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Img\ExitIcon.bmp" />
-    <Content Include="Content\Img\HomeIcon.svg" />
-    <Content Include="Content\Img\Logo.bmp" />
+    <Content Include="Content\Img\ExitIco.bmp" />
+    <Content Include="Content\Img\HomeIco.bmp" />
+    <Content Include="Content\Img\Log.bmp" />
     <Content Include="Content\Img\MenuButtonIcon.svg" />
-    <Content Include="Content\Img\SetingsIcon.bmp" />
+    <Content Include="Content\Img\SetingsIco.bmp" />
+    <Content Include="Content\Photo\Default.bmp" />
     <Content Include="Content\Stile\DialogsStyle.css" />
     <Content Include="Content\Stile\MainPageStyle.css" />
     <Content Include="Content\Stile\MasterPageStyle.css" />
@@ -334,6 +335,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Stile\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\CourseMsg - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DialogScripts.js" />
     <Content Include="Scripts\MainHub.js" />
@@ -365,7 +367,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -384,7 +385,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Photo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
