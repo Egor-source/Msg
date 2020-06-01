@@ -21,8 +21,10 @@
       {
         <div class="newFriend @i.Id user">
             <img src="/Content/Photo/@i.Photo" class="UserPhoto" />
-            <p class="Name">@i.Name </p>
-            <p class="Surname">@i.Surname</p>
+            <div class="fio">
+                <p class="Name">@i.Name </p>
+                <p class="Surname">@i.Surname</p>
+            </div>
             <button class="usersButton confirmFriend" id="@i.Id" value="@i.Id">Добавить </button>
         </div>
       }

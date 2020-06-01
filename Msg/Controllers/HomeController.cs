@@ -190,28 +190,43 @@ namespace Msg.Controllers
 
         }
 
-
+        /// <summary>
+        /// Метод для вывода всех сообщений в диалоги с выбраными пользователем
+        /// </summary>
+        /// <param name="userId">UserId пользователя</param>
+        /// <param name="interlocutorId">UserId собеседника</param>
+        /// <returns></returns>
         public ActionResult ShowDialog(string userId,string interlocutorId)
         {
+            //Список информации о всех сообщениях
             List<MessageInfoModel> dialog = new List<MessageInfoModel>();
+
+            //Информация собеседника
+            var interlocutor = db.Users.Find(interlocutorId);
+
+            ViewBag.Name = interlocutor.Name;
+            ViewBag.Surname = interlocutor.Surname;
+            ViewBag.Photo = interlocutor.Photo;
 
             ViewBag.InterlocutorId = interlocutorId;
 
+            //Ищет все сообщения пользователя с собеседником
             var messages = db.Messages.Where(m => (m.senderId == userId && m.recipientId == interlocutorId) || (m.senderId == interlocutorId && m.recipientId == userId)).OrderBy(x=>x.sendingTime).ToList();
 
             
 
             if (messages.Count != 0)
             {
+                //Информация пользователя
                 var user = db.Users.Find(userId);
-
-                var interlocutor = db.Users.Find(interlocutorId);
+                
 
                 foreach(var i in messages)
                 {
+                    //Добавляет к сообщениям информацию об их отправители
                     dialog.Add(i.senderId==userId?new MessageInfoModel{Photo=user.Photo,Name=user.Name,Surname=user.Surname,SenderId=user.Id,SendingTime=i.sendingTime.ToString("H:mm"),Text=i.text}: new MessageInfoModel { Photo = interlocutor.Photo, Name = interlocutor.Name, Surname = interlocutor.Surname, SenderId = interlocutor.Id, SendingTime = i.sendingTime.ToString("H:mm"), Text = i.text });
                 }
-
+               
                 ViewBag.Dialog = dialog;
             }
 

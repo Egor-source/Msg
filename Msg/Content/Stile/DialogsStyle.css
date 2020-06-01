@@ -1,28 +1,83 @@
-﻿.dialog{
-    width:62%;
-    margin-left:15px;
-    display:grid;
-    grid-template-rows:30fr 1fr;
-    border:1px solid black;
-    padding:15px;
+﻿.dialog {
+    width: 62%;
+    display: grid;
+    grid-template-rows: 30fr 1fr;
+    border: 1px solid black;
+    margin-left: 15px;
+    padding-bottom:15px;
 }
 
-
-.noMessages {
-    align-self: center;
-    justify-self:center;
-    opacity:0.5;
+.dialogHedder{
+    display:flex;
+    justify-content:center;
+    border-bottom:1px solid black;
     font-family:sans-serif;
+    font-size:20px;
+    font-weight:500;
 }
+    .dialogHedder > *{
+        margin-left:15px;
+        
+    }
+    .dialogHedder > .UserPhoto{
+
+        margin-top:7px;
+    }
+    .noMessages {
+        align-self: center;
+        justify-self: center;
+        opacity: 0.5;
+        font-family: sans-serif;
+    }
 
 
 .messageInput {
-    width: 99.5%;
     font-size: 20px;
     resize: none;
     overflow: hidden;
+    margin-left:15px;
+    margin-right:15px;
 }
 
-.messages{
-    overflow-y:scroll;
+.messages {
+    margin-left: 15px;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+    padding-left: 15px;
+    padding-right:15px;
+}
+
+.message{
+    display:flex;
+}
+
+
+.message > .UserPhoto {
+    align-self: center;
+    width: 60px;
+    height: 60px;
+}
+
+.info{
+    width:90%; 
+   padding-left:10px;
+}
+
+.messagefio {
+    display: flex;
+    align-items:flex-end;
+    font-size:17px;
+    font-weight:700;
+}
+
+.messagefio > *{
+    margin-bottom:5px;
+    margin-right:10px
+}
+
+
+.text {
+    margin-top: 0;
+    word-break: break-word;
+    font-size: 20px;
 }

@@ -190,16 +190,24 @@ namespace Msg.Hubs
             }
         }
 
+        /// <summary>
+        /// Отправляет сообщение пользователю
+        /// </summary>
+        /// <param name="senderId">UserId отправителя</param>
+        /// <param name="recipientId">UserId получателя</param>
+        /// <param name="messageText">Текст сообщения</param>
         public void SendMessage(string senderId,string recipientId,string messageText)
         {
             if (!string.IsNullOrWhiteSpace(messageText) && !string.IsNullOrEmpty(messageText))
             {
-                MessageModel message= new MessageModel { Id = db.Messages.Count().ToString(), senderId = senderId, recipientId = recipientId, sendingTime = DateTime.Now, text = messageText };
+                //Создает модель сообщения
+                MessageModel message= new MessageModel { Id = db.Messages.Count().ToString(), senderId = senderId, recipientId = recipientId, sendingTime = DateTime.Now, text =messageText};
 
+                //Добавляет сообщение в бд
                 db.Messages.Add(message);
                 db.SaveChanges();
 
-
+                //Отправляет получателю информацию о сообщении
                 if (Users.Any(x => x.UserId == recipientId))
                 {
                     var jsonMessage = JsonConvert.SerializeObject(db.Users.Where(x => x.Id == senderId).Select(x => new { x.Photo, x.Name, x.Surname, Text = messageText, message.sendingTime, senderId }));

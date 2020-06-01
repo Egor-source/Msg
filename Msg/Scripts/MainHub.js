@@ -1,7 +1,7 @@
 ﻿// Ссылка на автоматически-сгенерированный прокси хаба
 var hub = $.connection.usersHub;
 
-//получает и парсит cookie Пользователя
+//Получает cookie пользователя
 var cookie = $.cookie("User").split('&');
 
 var obj = {
@@ -19,7 +19,7 @@ for (var i = 0; i < cookie.length; i++) {
 //Выполняется при загрузки страницы
 $(document).ready(function () {
 
-
+    
     $('.user').click(function () {
         ShowDialog($(this).children('.usersButton').val());
     });
@@ -75,17 +75,28 @@ $(document).ready(function () {
 
     }
 
+    //Метод,вызываемый сервером при получении сообщения
     hub.client.getMessage = function (json) {
+        //Сереализует JSON строку в массив объектов
         var message = jQuery.parseJSON(json);
 
+        console.log(message.senderId);
+
+       
+
         for (var i = 0; i < message.length; i++) {
-            GenerateMessageView(message[i]);
+
+            if (message[i].senderId == $('.interlocutorId').val()) {
+                GenerateMessageView(message[i]);
+            }
         }
 
-        var messages = document.querySelector('.messages');
+            //Прокручивает диалог в конец
+            var messages = document.querySelector('.messages');
 
-        $('.messages').scrollTop(messages.scrollHeight);
-    };
+            $('.messages').scrollTop(messages.scrollHeight);
+        
+    }
 
     //Подключение к серверу
     $.connection.hub.start().done(function () {
@@ -217,34 +228,41 @@ function usub() {
     });
 }
 
+//Метод для вывода на экран всех сообщений с выбраным пользователем
+function ShowDialog(interlocutorId){
 
-function ShowDialog(recipientId){
+    $('.dialog').css({'grid-template-rows':'1fr 30fr 1fr'});
 
-   
         $.ajax({
             //Метод обработки
             url: "Home/ShowDialog",
             //Тип запроса
             type: "POST",
             //Передаваеймые в метод переменные
-            data: { userId: obj.id, interlocutorId: recipientId },
+            data: { userId: obj.id, interlocutorId: interlocutorId },
             //Тип передаваемых данных
             dataType: "html",
             success: function (dialog) {
                 $('.dialog').empty();
                 $('.dialog').append(dialog);
+                if ($('.message').length == 0) {
+                    $(".messages").css({ 'display': 'grid' });
+                }
+
             }
         });
 
+   
 }
 
 
-
+//Генерирует представление для полученного сообщения
 function GenerateMessageView(message) {
 
-
     var date = new Date(message.sendingTime);
+    $(".messages").css({ 'display': 'block' });
+    $(".noMessages").css({ 'display': 'none' });
 
-    $(".messages").append('<div class="message sender"><img src="/Content/Photo/' + message.Photo + '" class="UserPhoto"> <p class="Name">' + message.Name + '</p><p class="Surname">' + message.Surname + '</p><div class="date">' + date.getHours() + ":" + date.getMinutes() + '</div><p>' + message.Text + '</p></div>');
+    $(".messages").append('<div class="message sender"><img src="/Content/Photo/' + message.Photo + '" class="UserPhoto"><div class="info"><div class="messagefio"> <p class="Name">' + message.Name + '</p><p class="Surname">' + message.Surname + '</p><div class="date">' + date.getHours() + ":" + date.getMinutes() + '</div></div><p class="text">' + message.Text + '</p></div></div>');
 }
 
