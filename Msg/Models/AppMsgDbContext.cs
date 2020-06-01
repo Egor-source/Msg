@@ -15,7 +15,7 @@ namespace Msg.Models
     {
         public DbSet<FriendModel> Friends { get; set; }
 
-        public DbSet<MessageModel> MessagesP { get; set; }
+        public DbSet<MessageModel> Messages { get; set; }
 
         public AppMsgDbContext() : base("DefaultConnection") { }
 

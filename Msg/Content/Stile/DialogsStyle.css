@@ -15,12 +15,14 @@
     font-family:sans-serif;
 }
 
+
 .messageInput {
     width: 99.5%;
-    font-size:20px;
-    resize:none;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
+    font-size: 20px;
+    resize: none;
+    overflow: hidden;
+}
+
+.messages{
+    overflow-y:scroll;
 }

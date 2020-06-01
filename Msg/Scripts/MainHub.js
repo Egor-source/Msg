@@ -1,23 +1,28 @@
 ﻿// Ссылка на автоматически-сгенерированный прокси хаба
 var hub = $.connection.usersHub;
 
+//получает и парсит cookie Пользователя
+var cookie = $.cookie("User").split('&');
+
+var obj = {
+    id: null,
+    Name: null,
+    Surname: null,
+    Photo: null
+};
+
+for (var i = 0; i < cookie.length; i++) {
+    var k = cookie[i].split('=');
+    obj[k[0]] = k[1];
+}
+
 //Выполняется при загрузки страницы
 $(document).ready(function () {
 
-    //ShowDialog($(".UserButton").first().val());
 
-    //$('.user').click(function () {
-    //    ShowDialog($(this).children('.UserButton').val());
-    //});
-
-    //Получает куки пользователя
-    var cookie = $.cookie("User").split('Name');
-
-    //Парсит куки
-    var Id = cookie[0].split("=");
-
-    //Все еще парсит куки
-    Id = Id[1].slice(0, Id[1].length - 1);
+    $('.user').click(function () {
+        ShowDialog($(this).children('.usersButton').val());
+    });
 
     confirm();
 
@@ -70,10 +75,22 @@ $(document).ready(function () {
 
     }
 
+    hub.client.getMessage = function (json) {
+        var message = jQuery.parseJSON(json);
+
+        for (var i = 0; i < message.length; i++) {
+            GenerateMessageView(message[i]);
+        }
+
+        var messages = document.querySelector('.messages');
+
+        $('.messages').scrollTop(messages.scrollHeight);
+    };
+
     //Подключение к серверу
     $.connection.hub.start().done(function () {
         //Метод,вызываемый на сервере после подключения пользователя
-        hub.server.connect(Id);
+        hub.server.connect(obj.id);
     });
 
 });
@@ -96,7 +113,7 @@ function GenerateNewFriendView(newFriend) {
     });
 
     $('.user').click(function () {
-        ShowDialog($(this).children('.UserButton').val());
+        ShowDialog($(this).children('.usersButton').val());
     });
 }
 
@@ -118,7 +135,7 @@ function GenerateFriendView(friend) {
     });
 
     $('.user').click(function () {
-        ShowDialog($(this).children('.UserButton').val());
+        ShowDialog($(this).children('.usersButton').val());
     });
 }
 
@@ -139,7 +156,7 @@ function GenerateDeletingUserView(user) {
     });
 
     $('.user').click(function () {
-        ShowDialog($(this).children('.UserButton').val());
+        ShowDialog($(this).children('.usersButton').val());
     });
 }
 
@@ -203,14 +220,6 @@ function usub() {
 
 function ShowDialog(recipientId){
 
-    var cookie = $.cookie("User").split('Name');
-
-    //Парсит куки
-    var Id = cookie[0].split("=");
-
-    //Все еще парсит куки
-    Id = Id[1].slice(0, Id[1].length - 1);
-
    
         $.ajax({
             //Метод обработки
@@ -218,17 +227,24 @@ function ShowDialog(recipientId){
             //Тип запроса
             type: "POST",
             //Передаваеймые в метод переменные
-            data: { senderId: Id, recipientId: recipientId },
+            data: { userId: obj.id, interlocutorId: recipientId },
             //Тип передаваемых данных
             dataType: "html",
-          
+            success: function (dialog) {
+                $('.dialog').empty();
+                $('.dialog').append(dialog);
+            }
         });
-
-   
 
 }
 
 
 
+function GenerateMessageView(message) {
 
+
+    var date = new Date(message.sendingTime);
+
+    $(".messages").append('<div class="message sender"><img src="/Content/Photo/' + message.Photo + '" class="UserPhoto"> <p class="Name">' + message.Name + '</p><p class="Surname">' + message.Surname + '</p><div class="date">' + date.getHours() + ":" + date.getMinutes() + '</div><p>' + message.Text + '</p></div>');
+}
 

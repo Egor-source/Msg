@@ -90,10 +90,10 @@ namespace Msg.Controllers
             }
 
             //Получает список всех друзей текущего пользователя
-            var frinds = db.Friends.Where(u => u.FriendOneId == id || u.FriendTwoId == id).Select(u => u.FriendOneId == id ? new { Id = u.FriendTwoId, u.Status, u.HostRequestId } :new { Id = u.FriendOneId, u.Status, u.HostRequestId });
+            var frends = db.Friends.Where(u => u.FriendOneId == id || u.FriendTwoId == id).Select(u => u.FriendOneId == id ? new { Id = u.FriendTwoId, u.Status, u.HostRequestId } :new { Id = u.FriendOneId, u.Status, u.HostRequestId });
 
             //Отбирает всех друзей пользователя из списка искомых пользователей
-           var result = users.ToList().Join(frinds,
+           var result = users.ToList().Join(frends,
                                         u => u.Id,
                                         f => f.Id,
                                        (userInfo, friendInfo) => new
@@ -191,8 +191,31 @@ namespace Msg.Controllers
         }
 
 
-        public ActionResult ShowDialog(string senderId,string recipientId)
+        public ActionResult ShowDialog(string userId,string interlocutorId)
         {
+            List<MessageInfoModel> dialog = new List<MessageInfoModel>();
+
+            ViewBag.InterlocutorId = interlocutorId;
+
+            var messages = db.Messages.Where(m => (m.senderId == userId && m.recipientId == interlocutorId) || (m.senderId == interlocutorId && m.recipientId == userId)).OrderBy(x=>x.sendingTime).ToList();
+
+            
+
+            if (messages.Count != 0)
+            {
+                var user = db.Users.Find(userId);
+
+                var interlocutor = db.Users.Find(interlocutorId);
+
+                foreach(var i in messages)
+                {
+                    dialog.Add(i.senderId==userId?new MessageInfoModel{Photo=user.Photo,Name=user.Name,Surname=user.Surname,SenderId=user.Id,SendingTime=i.sendingTime.ToString("H:mm"),Text=i.text}: new MessageInfoModel { Photo = interlocutor.Photo, Name = interlocutor.Name, Surname = interlocutor.Surname, SenderId = interlocutor.Id, SendingTime = i.sendingTime.ToString("H:mm"), Text = i.text });
+                }
+
+                ViewBag.Dialog = dialog;
+            }
+
+
             return PartialView("Dialog");
         }
     }

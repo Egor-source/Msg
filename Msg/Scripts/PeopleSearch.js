@@ -37,7 +37,6 @@ function Success(users) {
     $(".status").empty();
   
 
-
     if (users == '') {
         $.ajax({
             //Метод обработки
@@ -70,7 +69,6 @@ function Success(users) {
 
         for (var i = 0; i < users.length; i++) {
 
-            var fId = '#' + users[i].Id;
 
 
             switch (users[i].Status) {
@@ -78,16 +76,7 @@ function Success(users) {
                     GenerateUser(users[i]);
                     break;
                 case 0:
-                    var cookie = $.cookie("User").split('Name');
-
-                    //Парсит куки
-                    var Id = cookie[0].split("=");
-
-                    //Все еще парсит куки
-                    Id = Id[1].slice(0, Id[1].length - 1);
-
-
-                    if (users[i].HostRequestId == Id) {
+                    if (users[i].HostRequestId == obj.id) {
                         GenerateNewFriendView(users[i]);
                     }
                     else {
@@ -127,7 +116,7 @@ function GenerateUser(user) {
     });
 
     $('.user').click(function () {
-        ShowDialog($(this).children('.UserButton').val());
+        ShowDialog($(this).children('.usersButton').val());
     });
 }
 
@@ -156,7 +145,7 @@ function GenerateSubscriptions(user) {
     });
 
     $('.user').click(function () {
-        ShowDialog($(this).children('.UserButton').val());
+        ShowDialog($(this).children('.usersButton').val());
     });
 }
 

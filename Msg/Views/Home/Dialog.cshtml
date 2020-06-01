@@ -1,20 +1,34 @@
 ﻿
-
-    @if (ViewBag.Messages != null)
-    {
-        <div class="messages">
-          @foreach (var message in ViewBag.Messages)
-           {
-
-           }
-       </div>
-    }
-    else
-    {
-        <p class="noMessages">
-            Нет сообщений
-        </p>
-    }
+<script src="~/Scripts/DialogScripts.js"></script>
 
 
-    <textarea type="text" class="messageInput"></textarea>
+@if (ViewBag.Dialog != null)
+{
+    HttpCookie cookie = Request.Cookies["User"];
+    <div class="messages">
+        @foreach (var message in ViewBag.Dialog)
+        {
+            string messageClass = @message.SenderId == @cookie["id"] ? "sender" : "recipient";
+
+            <div class="message @messageClass ">
+                <img src="~/Content/Photo/@message.Photo" class="UserPhoto" />
+                <p class="Name">@message.Name</p>
+                <p class="Surname">@message.Surname</p>
+                <div class="date">@message.SendingTime</div>
+                <p>@message.Text</p>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="noMessages">
+        Нет сообщений
+    </p>
+}
+
+<input type="hidden" class="interlocutorId" value="@ViewBag.InterlocutorId" />
+
+<textarea type="text" class="messageInput"></textarea>
+
+

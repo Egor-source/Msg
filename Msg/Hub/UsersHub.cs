@@ -189,5 +189,25 @@ namespace Msg.Hubs
                 Clients.Group(removable.UserId).unsubscribe(deleting.UserId);
             }
         }
+
+        public void SendMessage(string senderId,string recipientId,string messageText)
+        {
+            if (!string.IsNullOrWhiteSpace(messageText) && !string.IsNullOrEmpty(messageText))
+            {
+                MessageModel message= new MessageModel { Id = db.Messages.Count().ToString(), senderId = senderId, recipientId = recipientId, sendingTime = DateTime.Now, text = messageText };
+
+                db.Messages.Add(message);
+                db.SaveChanges();
+
+
+                if (Users.Any(x => x.UserId == recipientId))
+                {
+                    var jsonMessage = JsonConvert.SerializeObject(db.Users.Where(x => x.Id == senderId).Select(x => new { x.Photo, x.Name, x.Surname, Text = messageText, message.sendingTime, senderId }));
+
+                    Clients.Group(recipientId).getMessage(jsonMessage);
+                }
+            }
+
+        }
     }
 }
