@@ -1,4 +1,6 @@
-﻿function MenuButtonAction() {
+﻿
+
+function MenuButtonAction() {
     var elem = document.querySelector('.mainMenu');
 
     if (elem.classList.contains('On') == true) {

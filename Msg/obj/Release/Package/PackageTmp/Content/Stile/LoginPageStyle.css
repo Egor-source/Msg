@@ -1,0 +1,143 @@
+﻿body{
+    background-image:url(/Content/Img/LoginPageBackground.jpg);
+    background-size:cover;
+    background-repeat:no-repeat;
+    height:100vh;
+    display:grid;
+    justify-content:center;
+    align-items:center;
+    grid-auto-columns:40%;
+    min-height:350px;
+}
+
+.Content {
+    padding:0;
+    height:75%;
+    min-width:210px;
+}
+
+.LoginForm {
+    background-color: rgba(134, 158, 171, 0.7);
+    height: 100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    border-radius:5px;
+    box-shadow:0 0 10px rgba(0,0,0,0.5);
+    min-height:350px;
+}
+
+.Form {
+    height: 70%;
+    width: 60%;
+    display: grid;
+    grid-row-gap:25px;
+}
+
+ .Form * {
+   font-family: sans-serif;
+   font-size:18px;
+ }
+
+.formInput {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #516c84;
+    padding-left: 10px;
+    outline: none;
+}
+
+
+.formButton {
+    width: 100%;
+    border: 2px solid #516c84;
+    color: #265e56;
+    outline: none;
+}
+
+
+ .formButton:hover{
+
+    cursor: pointer;
+    background-color: #3e5969;
+    color: #ffff;
+    animation-name: colch;
+    animation-duration: 0.5s;
+}
+ 
+
+.submit {
+    order: 6;
+    background-color: #3e5969;
+    color: #ffff;
+}
+
+.submit:hover{
+    color: #265e56 ;
+    background: rgb(239, 239, 239);
+  animation:none;
+}
+
+      
+        @keyframes colch{
+            0% {
+                color: #265e56;
+                background: rgb(239, 239, 239);
+            }
+            100% {
+                background-color: #3e5969;
+                color: #ffff;
+            }
+        }
+
+@keyframes colch2 {
+    0% {
+        color: #3e5969;
+        background: #ffff;
+    }
+    100% {
+        background-color: #265e56;
+        color: rgb(239, 239, 239);
+    }
+}
+
+@media (max-width:1000px) {
+    body{
+        grid-auto-columns:60%;
+    }
+}
+
+@media (max-width:750px) {
+    body {
+        grid-auto-columns: 70%;
+    }
+    .Content{
+        padding-top:20%;
+    }
+}
+
+@media (max-width:750px) {
+    body {
+        grid-auto-columns: 90%;
+    }
+
+   
+}
+
+@media (max-height:550px) {
+    body {
+        grid-auto-columns: 70%;
+    }
+
+    .Content {
+        padding-top: 10%;
+    }
+    .LoginForm{
+    }
+    
+    .Form *{
+        font-size:15px;
+    }
+}

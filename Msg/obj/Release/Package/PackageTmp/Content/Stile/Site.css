@@ -1,5 +1,4 @@
 ﻿.field-validation-error {
-    color: #f00;
 }
 
 .field-validation-valid {
@@ -11,11 +10,12 @@
     background-color: #fee;
 }
 
-.validation-summary-errors {
-    font-weight: bold;
-    color: #f00;
-}
-
 .validation-summary-valid {
     display: none;
+
+}
+
+.validation-summary-errors * {
+    list-style-type: none;
+   
 }

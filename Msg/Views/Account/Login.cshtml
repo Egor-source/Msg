@@ -2,42 +2,41 @@
 @{
     ViewBag.Title = "Аутентификация";
 }
+    <link href="~/Content/Stile/LoginPageStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/LoginPageScripts.js"></script>
+    <section class="LoginForm">
 
 
-<section class="LoginForm">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "Form" }))
+        {
+            @Html.AntiForgeryToken()
 
-    <h2>Вход</h2>
+            <div class="Errors"> @Html.ValidationSummary(true)</div>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+            <div class="FormElement">
 
-        <div class="Errors"> @Html.ValidationSummary(true)</div>
+                @Html.TextBoxFor(m => m.Login, new { @class = "formInput", @placeholder = "Логин" })
+                @Html.ValidationMessageFor(model => model.Login)
 
-        <div class="FormElement">
-            <span class="formTitle">Логин</span>
-            @Html.TextBoxFor(m => m.Login, new { @class = "formInput" })
-            @Html.ValidationMessageFor(model => model.Login)
-        </div>
+            </div>
 
-        <div class="FormElement">
-            <span class="formTitle">Пароль</span>
-            @Html.PasswordFor(m => m.Password, new { @class = "formInput" })
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+            <div class="FormElement">
 
-        <div class="FormElement">
-            <input type="submit" value="Войти" class="formButton" />
-        </div>
-    }
-</section>
+                @Html.PasswordFor(m => m.Password, new { @class = "formInput", @placeholder = "Пароль" })
+                @Html.ValidationMessageFor(model => model.Password)
 
-<section class="LoginLinks">
+            </div>
+
+            <input type="submit" value="Войти" class="formButton submit" />
+
+            <button class="formButton Registration" type="button" id="@Url.Action("Register","Account")" >Регистрация</button>
+            <button class="formButton ResetPassword" type="button">Сброс пароля</button>
 
 
-    <span><button> @Html.ActionLink("Регистрация", "Register", "Account")</button></span>
-    <span><button>@Html.ActionLink("Забыл пароль", "PasswordReset", "Account")</button></span>
-</section>
+        }
+
+    </section>
+
 
 
 

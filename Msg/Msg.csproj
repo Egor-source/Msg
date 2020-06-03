@@ -319,10 +319,12 @@
     <Content Include="Content\Img\ExitIco.bmp" />
     <Content Include="Content\Img\HomeIco.bmp" />
     <Content Include="Content\Img\Log.bmp" />
+    <Content Include="Content\Img\LoginPageBackground.jpg" />
     <Content Include="Content\Img\MenuButtonIcon.svg" />
     <Content Include="Content\Img\SetingsIco.bmp" />
     <Content Include="Content\Photo\Default.bmp" />
     <Content Include="Content\Stile\DialogsStyle.css" />
+    <Content Include="Content\Stile\LoginPageStyle.css" />
     <Content Include="Content\Stile\MainPageStyle.css" />
     <Content Include="Content\Stile\MasterPageStyle.css" />
     <Content Include="Content\Stile\normalized.css" />
@@ -338,6 +340,8 @@
     <None Include="Properties\PublishProfiles\CourseMsg - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DialogScripts.js" />
+    <Content Include="Scripts\InputScripts.js" />
+    <Content Include="Scripts\LoginPageScripts.js" />
     <Content Include="Scripts\MainHub.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
