@@ -10,7 +10,7 @@
     @Styles.Render("~/Content/Stile/normalized.css")
     @Styles.Render("~/Content/Stile/Site.css")
 
-    @Scripts.Render("~/Scripts/MasterPathScripts.js")
+    @Scripts.Render("~/Scripts/MasterPageScripts.js")
     @Scripts.Render("~/scripts/jquery-3.4.1.min.js")
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
     @Scripts.Render("~/Scripts/jquery.cookie-1.4.1.min.js")
@@ -19,13 +19,11 @@
 <body>
 
 
-    <section class="nav-bar-container">
-        <nav class="nav-bar">
+    <header class="hedder">
+        <div class="hedder__content">
 
 
-            <a href=@Url.Action("Index", "Home")> <img class="logo" src="~/Content/Img/Log.bmp" /></a>
-
-            <div class="crutch"></div>
+            <a href=@Url.Action("Index", "Home")> <img class="hedder__content__logo" src="~/Content/Img/Log.bmp" /></a>
 
 
             @if (HttpContext.Current.User.Identity.IsAuthenticated && Request.Cookies["User"] != null)
@@ -35,22 +33,18 @@
                 HttpCookie cookies = Request.Cookies["User"];
 
 
-                <section class="menuContainer" onclick="MenuButtonAction()">
-                    <section class="User">
-                        <img src="~/Content/Photo/@cookies["Photo"]" class="UserPhoto" />
-                        <p class="UserFio">@Server.UrlDecode(@cookies["Name"]) @Server.UrlDecode( @cookies["Surname"])</p>
-                        <p class="UserFio">&#709</p>
+                    <section class="hedder__content__authUser__wrapper" onclick="MenuButtonAction()">
+                        <img src="~/Content/Photo/@cookies["Photo"]" class="hedder__content__authUser_photo" />
+                        <p class="hedder__content__authUser_fio">@Server.UrlDecode(@cookies["Name"])  @Server.UrlDecode(@cookies["Surname"])</p>
+                        <p class="hedder__content__authUser_fio">&#709</p>
                     </section>
 
-
-
-                    <ul class="mainMenu">
-                        <li class="container"><a href="@Url.Action("Index", "Home")" class="menuMember"><img class="menuIcon Home" src="~/Content/Img/HomeIco.bmp" /><p class="menuText">На главную</p></a></li>
-                        <li class="container"><a href="@Url.Action("Index","Settings")" class="menuMember"><img class="menuIcon" src="~/Content/Img/SetingsIco.bmp" /><p class="menuText">Настройки</p></a></li>
-                        <li class="container"><a href="@Url.Action("Exit", "Home")" class="menuMember"><img class="menuIcon  Exit" src="~/Content/Img/ExitIco.bmp" padding-rigth="40px" /><p class="menuText   ExitText">Выход</p></a></li>
+                    <ul class="hedder__content__authUser__menu">
+                        <li class="hedder__content__authUser__menu__wrapper"><a href="@Url.Action("Index", "Home")"><img src="~/Content/Img/HomeIco.bmp" />На главную</a></li>
+                        <li class="hedder__content__authUser__menu__wrapper"><a href="@Url.Action("Index","Settings")"><img  src="~/Content/Img/SetingsIco.bmp" />Настройки</a></li>
+                        <li class="hedder__content__authUser__menu__wrapper"><a href="@Url.Action("Exit", "Home")" ><img  src="~/Content/Img/ExitIco.bmp"  /><p>Выход</p></a></li>
 
                     </ul>
-                </section>
             }
             else
             {
@@ -61,20 +55,27 @@
 
                 Response.Cookies.Add(cookie);
 
-                <section class="NoAuthUser">
-                    <a href="@Url.Action("Login","Account")" class="NoAuthUserMember">Вход</a>
-                    <a href="@Url.Action("Register","Account")" class="NoAuthUserMember">Регистрация</a>
-                </section>
+                <nav class="navigation">
+                    <a href="@Url.Action("Login","Account")" class="navigation_link">Вход</a>
+                    <a href="@Url.Action("Register","Account")" class="navigation_link">Регистрация</a>
+                </nav>
+
+
+                <nav class="hedder__content__menu">
+                    <a href="@Url.Action("Login","Account")" class="hedder__content__menu__link">Вход</a>
+                    <a href="@Url.Action("Register","Account")" class="hedder__content__menu__link">Регистрация</a>
+                </nav>
+
             }
 
 
 
+            <div class="hedder__content__menu__icon__wrapper" onclick="MenuClick()">
+                <div class="hedder__content__menu__icon"></div>
+            </div>
 
-            <div class="blackSquare"></div>
-
-
-        </nav>
-    </section>
+        </div>
+    </header>
 
     <section class="Content" onclick="MenuButtonAction2()">
         @RenderBody()

@@ -337,7 +337,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Stile\bootstrap.min.css.map" />
-    <None Include="Properties\PublishProfiles\CourseMsg - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\CoursesMsg - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DialogScripts.js" />
     <Content Include="Scripts\InputScripts.js" />
@@ -358,7 +358,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\MasterPathScripts.js" />
+    <Content Include="Scripts\MasterPageScripts.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\PeopleSearch.js" />
     <Content Include="Scripts\SettingsScripts.js" />

@@ -1,179 +1,282 @@
 ﻿
-
-/*Контейнер навигационной панели*/
-.nav-bar-container {
-    height: 65px;
-    background-color: #4dbcc3;
-    position:fixed;
-    top:0;
-    width:100%
-}
-
-/*Навигационная панель*/
-.nav-bar {
+body {
     display: flex;
-    height: 60px;
-    justify-content: space-around;
-    background-color: #c1c1c1;
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
-/*Логотип*/
-.logo {
+.hedder {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    background-color: #c2c3c3;
+    justify-content: center;
+    min-width:310px;
+}
+
+    .hedder::after {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        background-color: #48bfc4;
+        content: '';
+        top: 65px;
+    }
+
+.hedder__content {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .hedder__content::after {
+        position: absolute;
+        width: 10%;
+        height: 100%;
+        content: '';
+        right:0;
+        background-color: #3e3e3e;
+    }
+
+.hedder__content__logo {
     width: 60px;
     height: 60px;
 }
-/*Черный квадкат справа*/
-.blackSquare {
-    justify-self: flex-end;
-    width: 100%;
-    height: 60px;
-    background-color: #404040;
-    position: absolute;
-    left: 90%;
-    z-index:1;
-}
 
-/*Костыль*/
-.crutch{
-    width:320px;
-}
-
-/*Контейнер кнопок не авторизированного пользователя*/
-.NoAuthUser {
-    align-self: flex-start;
+.navigation {
     display: flex;
-    justify-content: space-between;
-    flex-basis: 300px;
-    height: 60px;
-    z-index:2;
-}
-/*Кнопки не авторизированного пользователя*/
-.NoAuthUserMember {
-    display: flex;
-    flex-basis: 48%;
     height: 100%;
-    color: #faf4fb;
-    align-items: center;
-    justify-content: center;
-    background-color: #818181;
-    font-family: sans-serif;
-    font-size: 18px;
-    margin-right: 4px;
 }
 
-/*Изменение цвета при наведении на кнопку*/
-    .NoAuthUserMember:hover {
-        animation-name: col;
-        animation-duration: 0.5s;
-        background-color: #4dbcc3;
-        color: #404040;
-    }
-    /*Анимация изменения цвета*/
-   @keyframes col{
-    0% {
-        color: #faf4fb;
-        background-color: #818181;
-    }
-    100% {
-        background-color: #4dbcc3;
-        color: #404040;
-    }
-    
-   }
-
-
-   /*Контейнер меню и информации пользователя*/
-.menuContainer {
-    height: 60px;
-    z-index: 2;
-}
-/*Контейнер информиции пользователя*/
-.User {
+.navigation_link {
+    text-decoration: none;
+    color: #e5f2f3;
+    width: 150px;
+    height: 100%;
     display: flex;
-    width: 300px;
-    height: 61px;
+    justify-content: center;
+    align-items: center;
+    background-color: #828282;
+    font-size: 18px;
+    font-family: sans-serif;
+    margin-left: 10px;
+}
+
+    .navigation_link:hover {
+        background-color: #4bbec5;
+        color: #404040;
+        animation: color_change;
+        animation-duration: 0.5s;
+    }
+
+@keyframes color_change {
+    0% {
+        color: #e5f2f3;
+        background-color: #828282;
+    }
+
+    100% {
+        background-color: #4bbec5;
+        color: #404040;
+    }
+}
+
+
+
+.hedder__content__menu__icon__wrapper {
+  display:none;
+}
+
+
+.hedder__content__menu {
+    position: fixed;
+    top: -100%;
+    width: 100%;
+    background-color: rgba(24%, 24%, 24%,0.6);
+    display: flex;
+    flex-direction: column;
+    transition: top 0.3s ease;
+    left: 0;
+}
+
+.hedder__content__authUser__wrapper {
+    display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #4dbcc3;
-    margin-right: 5px;
+    background-color: #48bfc4;
+    cursor:pointer;
+    width:300px;
+    height:100%;
 }
-/*Фото пользователя*/
-.UserPhoto{
-    width:50px;
-    height:50px;
-    border-radius:10000px;
-    object-fit:cover;
+
+.hedder__content__authUser_photo {
+    width: 60px;
+    height: 60px;
 }
-/*Фото пользователя*/
-.UserFio {
-    color: #faf4fb;
+
+.hedder__content__authUser_fio {
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: 19px;
+    color: #e5f2f3;
+    margin-right: 15px;
 }
-/*Изменение курсора при наведении на контейнер */
-.User:hover {
-    cursor: pointer;
-}
-/*Меню*/
-.mainMenu {
-    display: none;
+
+.hedder__content__authUser__menu {
+    position: absolute;
+    top: -1000%;
+    background-color: #c2c3c3;
+    z-index: 4;
+    transition: top 0.3s ease;
     width: 300px;
-    list-style-type: none;
-    margin-top: 4px;
+    right: 12.5%;
     padding: 0;
+    margin: 0;
 }
-/*Контейнер элементов меню*/
-.container {
+
+
+.hedder__content__authUser__menu__active {
+   
+    top: 70px;
+    display: block;
+}
+
+.hedder__content__authUser__menu__wrapper {
+    border-top: 1px solid #c2c3c3;
     list-style-type: none;
-    background-color: #c1c1c1;
-    border-bottom: 1px solid #7d7d7d;
+    width: 100%;
+    height: 48px;
+    border-bottom: 1px solid #3e3e3e;
 }
-/*Добавляет верхнюю границу первому элементу меню при наведении */
-    .container:first-child:hover {
-        border-top: 1px solid #7d7d7d;
-    }
 
-    /*Элементы меню*/
-.menuMember {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: sans-serif;
-    color: #faf4fb;
-    font-size:15px;
-}
-    /*Изменение цвета при наведении на кнопку*/
-    .menuMember:hover {
-        animation-name: col;
-        animation-duration: 0.5s;
-        background-color: #4dbcc3;
-        color: #404040;
-    }
-
-    /*Иконки меню*/
-.menuIcon {
+.hedder__content__authUser__menu__wrapper img {
     width: 25px;
     height: 25px;
-    padding-right: 17px;
-}
-
-
-.Home{
-    padding-right:10px;
-}
-
-
-/*Иконка выхода*/
-.ExitText{
-    padding-right:22px;
-}
-
-.Content{
-    padding-top:65px;
+    margin-right:10px;
 }
 
 
 
+    .hedder__content__authUser__menu__wrapper a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        font-family: sans-serif;
+        color: #faf4fb;
+    }
+
+    .hedder__content__authUser__menu__wrapper:last-child a p,img{
+        margin-right:21px;
+    }
 
 
- 
+    .hedder__content__authUser__menu__wrapper:hover {
+        background-color: #48bfc4;
+        color: #3e3e3e;
+        transition:all 0.5s ease;
+    }
+
+    .hedder__content__authUser__menu__wrapper:first-child:hover {
+        border-top: 1px solid #3e3e3e;
+    }
+
+        @media (max-width:762px) {
+            .hedder {
+            height: 50px;
+        }
+    .hedder::after {
+        top: 50px;
+    }
+    .hedder__content__logo {
+        width:45px;
+        height:45px;
+    }
+
+    .navigation_link{
+        display:none;
+    }
+
+    .hedder__content__menu__icon__wrapper{
+        display:block;
+        height:25px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-right:10px
+    }
+
+    .hedder__content__menu__icon {
+        height: 5px;
+        width: 30px;
+        background-color: #828282;
+        position:relative;
+    }
+        .hedder__content__menu__icon:before {
+            position: absolute;
+            height: 5px;
+            width: 30px;
+            background-color: #828282;
+            content: '';
+            top: 10px;
+            transition: transform 0.2s ease-in,top 0.2s linear 0.2s;
+        }
+        .hedder__content__menu__icon:after {
+            position: absolute;
+            height: 5px;
+            width: 30px;
+            background-color: #828282;
+            content: '';
+            top: -10px;
+            transition: transform 0.2s ease-in,top 0.2s linear 0.2s;
+        }
+
+         hedder__content__menu__icon,.hedder__content__menu__icon__active{
+            background-color:transparent;
+         }
+        hedder__content__menu__icon, .hedder__content__menu__icon__active::before {
+            transform: rotate(45deg);
+            top: 0;
+            transition: top 0.2s linear, transform 0.2s ease-in 0.2s;
+        }
+        hedder__content__menu__icon, .hedder__content__menu__icon__active::after {
+            transform: rotate(-45deg);
+            top: 0;
+            transition: top 0.2s linear, transform 0.2s ease-in 0.2s;
+        }
+
+    .hedder__content__menu__active {
+        top: 55px;
+        z-index: 3;
+    }
+
+    .hedder__content__menu__link {
+        display:flex;
+        justify-content:center;
+        font-family: sans-serif;
+        font-size: 18px;
+        color: #f2ecdc;
+        height:30px;
+        margin-top:10px;
+        border-bottom:1px solid gray;
+    }
+
+        .hedder__content__authUser__wrapper{
+            display:none;
+        }
+
+            .hedder__content__authUser__menu {
+                width: 100%;
+                right: 0;
+            }
+
+            .hedder__content__authUser__menu__active {
+                top: 55px;
+                width: 100%;
+                transition: top 0.3s ease;
+            }
+}
